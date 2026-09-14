@@ -82,7 +82,7 @@ export function PrivacyPageClient() {
         <h2 className="text-xl font-bold text-slate-900 dark:text-white mt-8">4. Third-Party Service Providers</h2>
         <p>We work with trusted third-party providers for hosting and infrastructure:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Vercel:</strong> Cloud hosting, edge network, and content delivery.</li>
+          <li><strong>Cloud Infrastructure:</strong> Managed cloud hosting and content delivery.</li>
           <li><strong>Google AdSense:</strong> Advertising partner delivering non-intrusive ad inventory.</li>
           <li><strong>Plausible Analytics:</strong> Privacy-focused aggregate metrics.</li>
         </ul>
