@@ -82,20 +82,18 @@ export default async function RootLayout({
       className={inter.variable}
       suppressHydrationWarning
     >
-      <head>
-        {/* Theme init — runs before React hydration to prevent dark-mode flash. */}
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('buildora_theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})()`,
-          }}
-        />
-      </head>
       <body
         className="flex min-h-screen flex-col font-sans antialiased"
         suppressHydrationWarning
       >
+        {/* Theme init — runs before paint to prevent dark-mode flash */}
+        <script
+          id="theme-init"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('buildora_theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})()`,
+          }}
+        />
         <JsonLd id="org-schema" data={organizationSchema(SITE_URL)} />
         {plausibleDomain && (
           <Script
