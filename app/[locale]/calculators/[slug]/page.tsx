@@ -28,6 +28,41 @@ type ToolPageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
+/**
+ * Some older English guides include their own FAQ subsection. Tool pages also
+ * render the canonical FAQ block from TOOL_FAQS below the guide, which made
+ * those questions appear twice. Remove only that guide subsection when the
+ * canonical block is present, preserving any later guide sections.
+ */
+function removeGuideFaqSection(markdown: string): string {
+  const lines = markdown.split('\n');
+  const faqHeading = /^(#{1,6})\s+(?:\d+\.\s+)?Frequently Asked Questions(?:\s*\(FAQ\))?\s*#*\s*$/i;
+  let start = -1;
+  let level = 0;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const match = lines[index]!.match(faqHeading);
+    if (match) {
+      start = index;
+      level = match[1]!.length;
+      break;
+    }
+  }
+
+  if (start === -1) return markdown;
+
+  let end = lines.length;
+  for (let index = start + 1; index < lines.length; index += 1) {
+    const match = lines[index]!.match(/^(#{1,6})\s+/);
+    if (match && match[1]!.length <= level) {
+      end = index;
+      break;
+    }
+  }
+
+  return [...lines.slice(0, start), ...lines.slice(end)].join('\n').trim();
+}
+
 // These calculator-specific cards have not been created yet. A verified
 // shared card is preferable to publishing a social-image URL that returns 404.
 const SHARED_OG_IMAGE_TOOLS = new Set([
@@ -117,7 +152,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
   // language ships real prose in its initial HTML rather than a stub that a
   // client component fills in after hydration.
   const rawContent = loadLocalizedContent(tool.contentFile, locale);
-  const contentHtml = rawContent ? await marked.parse(preprocessLatex(rawContent)) : '';
 
   const localized = getLocalizedTool(tool.slug, locale);
   const toolName = localized?.name ?? tool.name;
@@ -129,6 +163,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
   // on the English pages only.
   const faqs = TOOL_FAQS[tool.slug] ?? [];
   const showFaq = locale === DEFAULT_LOCALE && faqs.length > 0;
+  const guideContent = showFaq ? removeGuideFaqSection(rawContent) : rawContent;
+  const contentHtml = guideContent ? await marked.parse(preprocessLatex(guideContent)) : '';
 
   // Schema URLs must match the canonical for THIS locale, otherwise every
   // translated page would claim the English URL as its subject.
