@@ -41,7 +41,7 @@ export async function logServerError(context: string, error: unknown): Promise<v
     // Dynamically imported so the Sentry bundle is only loaded in
     // environments where the DSN is actually set.
     // @ts-ignore - optional dependency
-    const Sentry = await import('@sentry/nextjs').catch(() => null);
+    const Sentry = await import(/* webpackIgnore: true */ '@sentry/nextjs').catch(() => null);
     if (!Sentry) return;
 
     // @ts-ignore - optional dependency
