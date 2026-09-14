@@ -4,9 +4,10 @@ import { LocaleLink as Link } from '@/components/layout/LocaleLink';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeToggle } from './ThemeToggle';
+import { BrandIcon } from './BrandIcon';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Calculator, X, Menu } from 'lucide-react';
+import { X, Menu } from 'lucide-react';
 
 const NAV_LINKS = [
   { href: '/calculators', labelKey: 'calculators' as const },
@@ -72,12 +73,10 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="group flex items-center gap-2 focus-visible:rounded-lg"
+            className="group flex items-center gap-2.5 focus-visible:rounded-lg"
             aria-label="Buildora — Home"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-400 shadow-sm transition-transform duration-200 group-hover:scale-105">
-              <Calculator className="h-4 w-4 text-white" aria-hidden="true" />
-            </span>
+            <BrandIcon className="h-8 w-8 shadow-sm rounded-lg" size={32} />
             <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
               Build<span className="gradient-text">ora</span>
             </span>
@@ -168,12 +167,10 @@ export function Header() {
           <Link
             href="/"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2.5"
             aria-label="Buildora — Home"
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-400">
-              <Calculator className="h-3.5 w-3.5 text-white" aria-hidden="true" />
-            </span>
+            <BrandIcon className="h-7 w-7 shadow-sm rounded-lg" size={28} />
             <span className="font-bold text-slate-900 dark:text-white">
               Build<span className="gradient-text">ora</span>
             </span>

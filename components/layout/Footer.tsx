@@ -2,7 +2,8 @@
 
 import { LocaleLink as Link } from '@/components/layout/LocaleLink';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
-import { Calculator, Github, Twitter, Linkedin } from 'lucide-react';
+import { BrandIcon } from './BrandIcon';
+import { Github, Twitter, Linkedin } from 'lucide-react';
 
 const TOOL_LINKS = [
   { href: '/calculators/asphalt-calculator', label: 'Asphalt Calculator' },
@@ -23,10 +24,8 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="group inline-flex items-center gap-2" aria-label="Buildora — Home">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-400 shadow">
-                <Calculator className="h-4 w-4 text-white" aria-hidden="true" />
-              </span>
+            <Link href="/" className="group inline-flex items-center gap-2.5" aria-label="Buildora — Home">
+              <BrandIcon className="h-8 w-8 shadow rounded-lg" size={32} />
               <span className="text-lg font-bold text-white">
                 Build<span className="gradient-text">ora</span>
               </span>
