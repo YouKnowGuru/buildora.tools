@@ -36,15 +36,15 @@ const nextConfig = {
         destination: 'https://buildora.tools/:path*',
         permanent: true,
       },
-      // 404 cleanup: Redirect uncrawled/unbuilt tools to live counterparts
+      // 404 cleanup: Redirect uncrawled/unbuilt tools to calculators directory
       {
         source: '/calculators/concrete-calculator',
-        destination: '/calculators/concrete-block-calculator',
+        destination: '/calculators',
         permanent: true,
       },
       {
         source: '/:locale/calculators/concrete-calculator',
-        destination: '/:locale/calculators/concrete-block-calculator',
+        destination: '/:locale/calculators',
         permanent: true,
       },
       {
