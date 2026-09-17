@@ -1,7 +1,7 @@
 'use client';
 
 import { LocaleLink as Link } from '@/components/layout/LocaleLink';
-import { tools } from '@/lib/registry/tools';
+import { tools, getToolBySlug } from '@/lib/registry/tools';
 import { NewsletterForm } from '@/components/calculator/NewsletterForm';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import {
@@ -9,7 +9,9 @@ import {
   Zap, CheckCircle2, Users, Lock,
 } from 'lucide-react';
 
-const featuredTool = tools[0];
+// Pin the hero CTA to a specific tool so reordering the registry never
+// silently breaks the button text / link pairing.
+const featuredTool = getToolBySlug('asphalt-calculator');
 const previewTools = tools.slice(0, 6);
 
 // Category → colour mapping for tool cards
