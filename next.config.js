@@ -20,14 +20,17 @@ const securityHeaders = [
   // Minimal CSP to satisfy the Lighthouse "script-src missing" and
   // "object-src missing" High-severity findings.
   // Plausible analytics is allowlisted; everything else self-hosted.
+  // Note: fonts.googleapis.com / fonts.gstatic.com are intentionally
+  // omitted — all fonts are self-hosted via next/font/google, so no
+  // external font requests are made in production.
   {
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://plausible.io",
+      "script-src 'self' 'unsafe-inline' 'sha256-pcK6pjNPLCCze0jcl7tkSEt5zgpsmAW+0Z2EvuCsvhE=' https://plausible.io",
       "connect-src 'self' https://plausible.io",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' https://fonts.gstatic.com",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
       "img-src 'self' data: blob:",
       "object-src 'none'",
       "frame-ancestors 'none'",
@@ -59,9 +62,15 @@ const nextConfig = {
   },
 
   experimental: {
-    // Tree-shake lucide-react so only the icons actually used are bundled,
-    // instead of the entire ~2 MB icon library being pulled in.
-    optimizePackageImports: ['lucide-react'],
+    // Tree-shake lucide-react and zod so only the exports actually used
+    // are bundled, instead of the entire library being pulled in.
+    optimizePackageImports: ['lucide-react', 'zod'],
+
+    // Use the project's browserslist config (package.json) to determine
+    // which JS transforms and polyfills SWC emits. Modern browser targets
+    // mean SWC skips ~17 KiB of polyfills for Array.at, Object.fromEntries,
+    // etc. that Lighthouse flagged as "legacy JavaScript".
+    browsersListForSwc: true,
   },
 
   async redirects() {

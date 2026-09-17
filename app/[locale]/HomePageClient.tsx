@@ -139,7 +139,7 @@ export function HomePageClient({ t }: HomePageProps) {
             {STATS.map(({ value, label }) => (
               <div key={label} className="rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 shadow-sm dark:border-slate-700/60 dark:bg-slate-900/50">
                 <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{value}</p>
-                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{label}</p>
+                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-300">{label}</p>
               </div>
             ))}
           </div>
@@ -220,7 +220,7 @@ export function HomePageClient({ t }: HomePageProps) {
                   <h3 className="mt-4 text-base font-semibold text-slate-900 transition-colors group-hover:text-primary dark:text-white dark:group-hover:text-primary-400">
                     {tool.name}
                   </h3>
-                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-slate-500 dark:text-slate-300">
                     {tool.shortDescription}
                   </p>
                 </Link>
@@ -271,7 +271,7 @@ export function HomePageClient({ t }: HomePageProps) {
                 </span>
               </div>
               <h3 className="font-bold text-slate-900 dark:text-white">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{desc}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-300">{desc}</p>
             </div>
           ))}
         </div>
@@ -300,7 +300,7 @@ export function HomePageClient({ t }: HomePageProps) {
                   {icon}
                 </div>
                 <h3 className="mt-4 font-semibold text-slate-900 dark:text-white">{title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{desc}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-300">{desc}</p>
               </div>
             ))}
           </div>

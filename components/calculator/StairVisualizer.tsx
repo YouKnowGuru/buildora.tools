@@ -52,7 +52,7 @@ export function StairVisualizer({
   return (
     <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50/50 p-4 transition-all dark:border-slate-800 dark:bg-slate-900/50">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
           Interactive Stair Framing & Stringer Schematic
         </span>
         <div className="flex items-center gap-2">

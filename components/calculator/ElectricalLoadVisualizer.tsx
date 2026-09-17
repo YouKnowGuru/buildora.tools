@@ -222,21 +222,21 @@ export function ElectricalLoadVisualizer({
       {/* Diagnostic Badges */}
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Total Demand</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Total Demand</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {totalCalculatedLoadVA.toLocaleString()} <span className="text-xs font-normal text-slate-500">VA</span>
           </p>
         </div>
 
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Service Current</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Service Current</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {calculatedAmperes} <span className="text-xs font-normal text-slate-500">Amps</span>
           </p>
         </div>
 
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Service Size</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Service Size</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {recommendedServiceAmps} <span className="text-xs font-normal text-slate-500">Amps</span>
           </p>
@@ -247,7 +247,7 @@ export function ElectricalLoadVisualizer({
             ? 'border-rose-300 bg-rose-50/80 dark:border-rose-800 dark:bg-rose-950/40' 
             : 'border-emerald-300 bg-emerald-50/80 dark:border-emerald-800 dark:bg-emerald-950/40'
         }`}>
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Spare Capacity</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Spare Capacity</span>
           <p className={`mt-0.5 text-sm font-bold ${isOverloaded ? 'text-rose-700 dark:text-rose-300' : 'text-emerald-700 dark:text-emerald-300'}`}>
             {isOverloaded ? `-${Math.abs(spareCapacityAmperes)} A` : `+${spareCapacityAmperes} A`}
           </p>
@@ -260,11 +260,11 @@ export function ElectricalLoadVisualizer({
           <span className="font-semibold text-slate-900 dark:text-slate-100">
             🔌 NEC 310.12 Service Entrance Conductors:
           </span>
-          <span className="text-slate-600 dark:text-slate-400">
+          <span className="text-slate-600 dark:text-slate-300">
             Cu: <strong className="text-slate-900 dark:text-white">{copperServiceConductor}</strong> | Al: <strong className="text-slate-900 dark:text-white">{aluminumServiceConductor}</strong>
           </span>
         </div>
-        <div className="mt-1.5 text-[10px] text-slate-500 dark:text-slate-400">
+        <div className="mt-1.5 text-[10px] text-slate-500 dark:text-slate-300">
           Grounding Electrode Conductor (GEC) sized per NEC 250.66 — see results table below.
         </div>
       </div>

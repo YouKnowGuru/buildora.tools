@@ -130,12 +130,12 @@ export function HomeInspectionVisualizer({
               {units === 'metric' ? 'Metric (m²)' : 'Imperial (sq ft)'}
             </span>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-slate-500 dark:text-slate-300">
             {PROPERTY_LABELS[propertyType] ?? propertyType} · {AGE_LABELS[homeAge] ?? homeAge} · {FOUNDATION_LABELS[foundation] ?? foundation} · {REGION_LABELS[region] ?? region}
           </p>
         </div>
         <div className="text-right">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Estimated Total</p>
+          <p className="text-xs font-semibold text-slate-500 dark:text-slate-300">Estimated Total</p>
           <p className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">{fmt(totalCostMid)}</p>
         </div>
       </div>
@@ -151,7 +151,7 @@ export function HomeInspectionVisualizer({
             className={`flex shrink-0 items-center gap-1.5 rounded-t-lg px-3 py-2 text-xs font-bold transition ${
               activeTab === tab.id
                 ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-foreground'
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-200'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-slate-200'
             }`}
           >
             {tab.icon}
@@ -165,7 +165,7 @@ export function HomeInspectionVisualizer({
           <div className="space-y-4">
             {/* Range bar */}
             <div>
-              <div className="mb-1.5 flex items-baseline justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+              <div className="mb-1.5 flex items-baseline justify-between text-xs font-semibold text-slate-500 dark:text-slate-300">
                 <span>{fmt(totalCostLow)} (low)</span>
                 <span className="text-slate-700 dark:text-slate-200">typical range</span>
                 <span>{fmt(totalCostHigh)} (high)</span>
@@ -191,7 +191,7 @@ export function HomeInspectionVisualizer({
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-300">
                     {displayArea.toLocaleString()} {areaLabel} · {PROPERTY_LABELS[propertyType] ?? propertyType}
                   </p>
                 </div>
@@ -258,20 +258,20 @@ export function HomeInspectionVisualizer({
         {activeTab === 'schedule' && (
           <div className="space-y-4">
             <div className="rounded-xl border border-slate-100 p-4 text-center dark:border-slate-800">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Estimated On-Site Duration</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">Estimated On-Site Duration</p>
               <p className="mt-1 text-4xl font-black tracking-tight text-slate-900 dark:text-white">≈ {estimatedHours} hrs</p>
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-300">
                 Based on {displayArea.toLocaleString()} {areaLabel}, {FOUNDATION_LABELS[foundation]?.toLowerCase() ?? foundation}, and selected add-ons
               </p>
             </div>
             <div className="grid gap-2 text-sm sm:grid-cols-2">
               <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/50">
                 <p className="font-bold text-slate-700 dark:text-slate-200">Report delivery</p>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Written report typically within 24–48 hours; some inspectors deliver same day.</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-300">Written report typically within 24–48 hours; some inspectors deliver same day.</p>
               </div>
               <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/50">
                 <p className="font-bold text-slate-700 dark:text-slate-200">Booking lead time</p>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Standard scheduling is 2–5 business days in most markets; rush adds a premium.</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-300">Standard scheduling is 2–5 business days in most markets; rush adds a premium.</p>
               </div>
               {includeRadon && (
                 <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 sm:col-span-2 dark:border-amber-800 dark:bg-amber-950/30">
@@ -305,7 +305,7 @@ export function HomeInspectionVisualizer({
                 <span className="text-slate-700 dark:text-slate-300">{item}</span>
               </div>
             ))}
-            <div className="mt-3 flex gap-2 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/40 dark:text-slate-400">
+            <div className="mt-3 flex gap-2 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/40 dark:text-slate-300">
               <Info className="h-4 w-4 shrink-0" />
               <p>
                 Follows the ASHI / InterNACHI Standards of Practice — a visual, non-invasive assessment. Destructive testing,

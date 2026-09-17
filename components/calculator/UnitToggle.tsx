@@ -33,7 +33,7 @@ export function UnitToggle({ value, onChange }: UnitToggleProps) {
             className={`group relative flex min-h-[38px] items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               isActive
                 ? 'bg-white text-primary shadow-sm dark:bg-slate-900 dark:text-white ring-1 ring-slate-950/5 dark:ring-white/10'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-200'
             }`}
           >
             <span className="capitalize">{label}</span>

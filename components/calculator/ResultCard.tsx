@@ -321,7 +321,7 @@ export function ResultCard({
         </div>
 
         {/* Trust & EEAT Tolerance Note */}
-        <div className="mt-4 rounded-xl bg-slate-50 p-3 text-[11px] leading-relaxed text-slate-500 dark:bg-slate-800/40 dark:text-slate-400">
+        <div className="mt-4 rounded-xl bg-slate-50 p-3 text-[11px] leading-relaxed text-slate-500 dark:bg-slate-800/40 dark:text-slate-300">
           <div className="flex items-start gap-1.5">
             <span className="text-xs shrink-0">📐</span>
             <span>
@@ -334,11 +334,12 @@ export function ResultCard({
       {/* Mobile-only sticky bottom bar for quick reading on job sites */}
       {primaryHighlight && (
         <div
-          aria-hidden="true"
+          role="region"
+          aria-label="Quick result summary"
           className="no-print fixed bottom-0 left-0 right-0 z-30 flex items-center justify-between border-t border-slate-200 bg-white/95 px-4 py-3 shadow-2xl backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 sm:hidden pb-safe"
         >
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300 truncate max-w-[200px]">
               {primaryLabelText}
             </span>
             <span className="text-lg font-black text-primary">

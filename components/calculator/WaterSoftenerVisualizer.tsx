@@ -261,28 +261,28 @@ export function WaterSoftenerVisualizer({
       {/* Info Badges */}
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Softener Size</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Softener Size</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {recommendedGrainSize.toLocaleString()} <span className="text-xs font-normal text-slate-500">grains</span>
           </p>
         </div>
 
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Resin Volume</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Resin Volume</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {recommendedResinCuFt} <span className="text-xs font-normal text-slate-500">cu ft</span>
           </p>
         </div>
 
         <div className={`rounded-lg border p-2.5 text-center ${badge.bg} border-current/20`}>
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Water Hardness</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Water Hardness</span>
           <p className={`mt-0.5 text-sm font-bold ${badge.text}`}>
             {compensatedHardnessGPG} <span className="text-xs font-normal">GPG</span>
           </p>
         </div>
 
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Peak Flow</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Peak Flow</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {peakFlowGPM} <span className="text-xs font-normal text-slate-500">GPM</span>
           </p>
@@ -291,7 +291,7 @@ export function WaterSoftenerVisualizer({
 
       {/* Grain Tier Progress */}
       <div className="mt-3 space-y-1.5">
-        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Grain Capacity Tier</p>
+        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Grain Capacity Tier</p>
         <div className="flex gap-1">
           {tiers.map((t, i) => (
             <div

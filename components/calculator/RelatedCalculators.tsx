@@ -57,7 +57,7 @@ export function RelatedCalculators({ currentSlug, category }: RelatedCalculators
                   <p className="mt-3 font-bold text-slate-900 transition group-hover:text-primary dark:text-white dark:group-hover:text-primary-foreground">
                     {name}
                   </p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-500 line-clamp-2 dark:text-slate-400">
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-500 line-clamp-2 dark:text-slate-300">
                     {shortDesc}
                   </p>
                 </div>

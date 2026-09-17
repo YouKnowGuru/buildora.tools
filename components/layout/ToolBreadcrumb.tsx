@@ -35,7 +35,7 @@ export function ToolBreadcrumb({ items, toolSlug, toolName }: ToolBreadcrumbProp
       ];
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-xs font-medium text-slate-500 dark:text-slate-400">
+    <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-xs font-medium text-slate-500 dark:text-slate-300">
       <ol className="flex flex-wrap items-center gap-1.5 rounded-full border border-slate-200/80 bg-slate-50/80 px-3.5 py-1.5 shadow-2xs backdrop-blur-xs dark:border-slate-800 dark:bg-slate-900/80">
         {resolvedItems.map((item, index) => {
           const isLast = index === resolvedItems.length - 1;

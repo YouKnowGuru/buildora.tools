@@ -155,7 +155,7 @@ export function CalculatorsPageClient() {
 
         {/* ── Results count ── */}
         {(query || activeCategory !== 'all') && (
-          <p className="mb-5 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mb-5 text-sm text-slate-500 dark:text-slate-300">
             Showing <strong className="text-slate-900 dark:text-white">{filtered.length}</strong> of {tools.length} tools
             {activeCategory !== 'all' && (
               <> in <strong className="capitalize text-slate-900 dark:text-white">{activeCategory.replace('-', ' ')}</strong></>
@@ -190,7 +190,7 @@ export function CalculatorsPageClient() {
                   <h2 className="mt-4 text-base font-bold text-slate-900 transition-colors group-hover:text-primary dark:text-white dark:group-hover:text-primary-400">
                     {tool.name}
                   </h2>
-                  <p className="mt-1.5 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                  <p className="mt-1.5 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-500 dark:text-slate-300">
                     {tool.shortDescription}
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary dark:text-primary-400">
@@ -205,7 +205,7 @@ export function CalculatorsPageClient() {
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-16 text-center dark:border-slate-700 dark:bg-slate-900/40">
             <Search className="mx-auto mb-3 h-8 w-8 text-slate-300 dark:text-slate-600" aria-hidden="true" />
             <p className="font-semibold text-slate-900 dark:text-white">No calculators found</p>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
               Try a different search term or clear the filters.
             </p>
             <button

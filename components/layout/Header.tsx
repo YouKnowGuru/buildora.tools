@@ -62,7 +62,7 @@ export function Header() {
     <>
       {/* ━━━━━━━━━━━━ HEADER BAR ━━━━━━━━━━━━ */}
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        className={`sticky top-0 z-50 w-full transition-[background-color,box-shadow] duration-300 ${
           scrolled
             ? 'bg-white/90 shadow-header backdrop-blur-lg dark:bg-slate-950/90'
             : 'bg-white/80 backdrop-blur-md dark:bg-slate-950/80'

@@ -215,7 +215,7 @@ export function ToolHeader({ tool }: ToolHeaderProps) {
       </p>
 
       {/* Quick reassurance feature strip */}
-      <div className="mt-6 flex flex-wrap items-center gap-y-2 gap-x-6 border-t border-slate-200/80 pt-4 text-xs font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">
+      <div className="mt-6 flex flex-wrap items-center gap-y-2 gap-x-6 border-t border-slate-200/80 pt-4 text-xs font-medium text-slate-500 dark:border-slate-800 dark:text-slate-300">
         <span className="flex items-center gap-1.5" title={isCostOnlyTool ? 'Uses planning cost data for estimating guidance.' : 'Uses construction-cost data and code references for estimating guidance.'}>
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
           {isCostOnlyTool ? '2026 Planning Cost Guidance' : labels.costData}

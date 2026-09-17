@@ -201,21 +201,21 @@ export function SprayFoamVisualizer({
       {/* Diagnostic Badges & Chemical Yield Info */}
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Total Volume</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Total Volume</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {boardFeet?.toLocaleString()} <span className="text-xs font-normal text-slate-500">bd ft</span>
           </p>
         </div>
 
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">55-Gal Drum Sets</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">55-Gal Drum Sets</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {drumSets} <span className="text-xs font-normal text-slate-500">{drumSets === 1 ? 'set' : 'sets'}</span>
           </p>
         </div>
 
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">600 bd ft DIY Kits</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">600 bd ft DIY Kits</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {diyKits} <span className="text-xs font-normal text-slate-500">{diyKits === 1 ? 'kit' : 'kits'}</span>
           </p>
@@ -226,7 +226,7 @@ export function SprayFoamVisualizer({
             ? 'border-emerald-300 bg-emerald-50/80 dark:border-emerald-800 dark:bg-emerald-950/40'
             : 'border-slate-200 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-900/70'
         }`}>
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Vapor Retarder</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Vapor Retarder</span>
           <p className={`mt-0.5 text-xs font-bold ${
             isVaporRetarder ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-700 dark:text-slate-300'
           }`}>

@@ -236,14 +236,14 @@ export function BathroomRemodelVisualizer({
       <div className="border-b border-slate-100 bg-slate-50/70 px-5 py-4 dark:border-slate-800 dark:bg-slate-800/40">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
               Likely Remodel Cost
             </span>
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mt-0.5">
               <span className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
                 {currencySymbol}{totalEstimatedCost.toLocaleString()}
               </span>
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-300">
                 Estimated Range: <strong className="text-slate-700 dark:text-slate-200">{currencySymbol}{estimatedCostLow.toLocaleString()} – {currencySymbol}{estimatedCostHigh.toLocaleString()}</strong>
               </span>
             </div>
@@ -258,7 +258,7 @@ export function BathroomRemodelVisualizer({
 
         {/* Top Cost Drivers Strip (Immediately Below Likely Cost) */}
         <div className="mt-3.5 flex flex-wrap items-center gap-2 border-t border-slate-200/70 pt-3 dark:border-slate-800">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
             Top Cost Drivers:
           </span>
           {topDrivers.map((driver) => (
@@ -286,7 +286,7 @@ export function BathroomRemodelVisualizer({
             <h3 className="text-sm font-bold text-slate-900 dark:text-white truncate">
               Architectural Floorplan &amp; Cost Model
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-300">
               {squareFootage} {areaUnit} • {currentTier.label} • {estimatedWeeksMin}–{estimatedWeeksMax} Wks
             </p>
           </div>
@@ -300,7 +300,7 @@ export function BathroomRemodelVisualizer({
             className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
               activeTab === 'floorplan'
                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-200'
             }`}
           >
             <Layers className="h-3.5 w-3.5 shrink-0" />
@@ -312,7 +312,7 @@ export function BathroomRemodelVisualizer({
             className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
               activeTab === 'budget'
                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-200'
             }`}
           >
             <DollarSign className="h-3.5 w-3.5 shrink-0" />
@@ -324,7 +324,7 @@ export function BathroomRemodelVisualizer({
             className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
               activeTab === 'scenarios'
                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-200'
             }`}
           >
             <SlidersHorizontal className="h-3.5 w-3.5 shrink-0" />
@@ -783,7 +783,7 @@ export function BathroomRemodelVisualizer({
 
             {/* Contractor Labor vs Materials Split */}
             <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/50">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300 mb-2">
                 Labor vs Materials Split
               </h4>
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -810,7 +810,7 @@ export function BathroomRemodelVisualizer({
 
             {/* What's Driving Your Cost */}
             <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/60">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300 mb-3">
                 What&apos;s Driving Your Estimate?
               </h4>
               <div className="space-y-2.5">
@@ -831,17 +831,17 @@ export function BathroomRemodelVisualizer({
                   ))}
               </div>
               {includeTileShower && (
-                <p className="mt-3 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3">
+                <p className="mt-3 text-[11px] leading-relaxed text-slate-500 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800 pt-3">
                   💡 Your custom tile shower is adding approximately <strong className="text-slate-700 dark:text-slate-300">{currencySymbol}{finishTier === 'budget' ? '2,400' : finishTier === 'mid-range' ? '4,200' : '7,500'}</strong> to this project. Choosing a prefabricated surround would reduce the tile and waterproofing line significantly.
                 </p>
               )}
               {includeHeatedFloor && (
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-300">
                   🔥 Radiant floor heating is included in this estimate. Removing it could save $600–$1,500+ depending on room size.
                 </p>
               )}
               {layoutChange !== 'none' && (
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-300">
                   🔧 A plumbing layout change is included. Keeping fixtures in their existing positions could reduce costs by $1,200–$4,800.
                 </p>
               )}
@@ -852,13 +852,13 @@ export function BathroomRemodelVisualizer({
 
             {/* Compare Scenarios in Budget Tab */}
             <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/60">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300 mb-3">
                 Scenario Comparison
               </h4>
               <div className="overflow-x-auto -mx-1 px-1">
                 <table className="w-full text-xs text-left min-w-[480px]">
                   <thead>
-                    <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-semibold">
+                    <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-300 font-semibold">
                       <th className="pb-2 pr-3">Scenario</th>
                       <th className="pb-2 pr-3 text-right">Likely Total</th>
                       <th className="pb-2 pr-3 text-right">{currencySymbol}/{areaUnit}</th>
@@ -921,7 +921,7 @@ export function BathroomRemodelVisualizer({
               <h4 className="text-base font-bold text-slate-900 dark:text-white">
                 Compare Project Scenarios ({squareFootage} {areaUnit})
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                 See how keeping your existing plumbing footprint or adjusting finish levels shifts total costs, labor, and timeline.
               </p>
             </div>
@@ -940,7 +940,7 @@ export function BathroomRemodelVisualizer({
                     <span className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400">
                       {currencySymbol}{scenarioBudget.totalEstimatedCost.toLocaleString()}
                     </span>
-                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{currencySymbol}{scenarioBudget.costPerSqFt}/{areaUnit}</span>
+                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-300">{currencySymbol}{scenarioBudget.costPerSqFt}/{areaUnit}</span>
                   </div>
                   <ul className="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3">
                     <li className="flex items-start gap-1.5">
@@ -975,7 +975,7 @@ export function BathroomRemodelVisualizer({
                     <span className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
                       {currencySymbol}{totalEstimatedCost.toLocaleString()}
                     </span>
-                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{currencySymbol}{costPerSqFt}/{areaUnit}</span>
+                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-300">{currencySymbol}{costPerSqFt}/{areaUnit}</span>
                   </div>
                   <ul className="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-slate-300 border-t border-primary/10 dark:border-primary/20 pt-3">
                     <li className="flex items-start gap-1.5">
@@ -1002,7 +1002,7 @@ export function BathroomRemodelVisualizer({
               <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between transition-all hover:border-slate-300 dark:hover:border-slate-700 shadow-xs">
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Layout Change</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">Layout Change</span>
                     <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">Pipe Relocation</span>
                   </div>
                   <h5 className="mt-2 font-bold text-slate-900 dark:text-white text-base">Move Plumbing</h5>
@@ -1010,7 +1010,7 @@ export function BathroomRemodelVisualizer({
                     <span className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-slate-100">
                       {currencySymbol}{scenarioMovePlumbing.totalEstimatedCost.toLocaleString()}
                     </span>
-                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{currencySymbol}{scenarioMovePlumbing.costPerSqFt}/{areaUnit}</span>
+                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-300">{currencySymbol}{scenarioMovePlumbing.costPerSqFt}/{areaUnit}</span>
                   </div>
                   <ul className="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3">
                     <li className="flex items-start gap-1.5">
@@ -1045,7 +1045,7 @@ export function BathroomRemodelVisualizer({
                     <span className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-400">
                       {currencySymbol}{scenarioLuxury.totalEstimatedCost.toLocaleString()}
                     </span>
-                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{currencySymbol}{scenarioLuxury.costPerSqFt}/{areaUnit}</span>
+                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-300">{currencySymbol}{scenarioLuxury.costPerSqFt}/{areaUnit}</span>
                   </div>
                   <ul className="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3">
                     <li className="flex items-start gap-1.5">
@@ -1079,7 +1079,7 @@ export function BathroomRemodelVisualizer({
       </div>
 
       {/* Prominent Planning Disclaimer (Point 29) */}
-      <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-3 text-[11px] leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-400">
+      <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-3 text-[11px] leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300">
         <p>
           <strong className="text-slate-700 dark:text-slate-300">Planning estimate:</strong> This calculator provides an approximate remodeling budget based on the inputs you provide. Actual costs vary by location, contractor rates, material selections, site conditions, permits and unforeseen construction issues. Get local contractor quotes before starting work.
         </p>

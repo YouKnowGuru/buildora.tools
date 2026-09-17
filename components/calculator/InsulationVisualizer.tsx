@@ -87,7 +87,7 @@ export function InsulationVisualizer({
   return (
     <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50/50 p-4 transition-all dark:border-slate-800 dark:bg-slate-900/50">
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
           {localized?.name || 'Insulation Visualizer'}
         </span>
         <div className="flex items-center gap-2">
@@ -265,7 +265,7 @@ export function InsulationVisualizer({
         </svg>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-300">
         <span className="flex items-center gap-1.5">
           <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: primaryColor }} />
           {materialName} Fill

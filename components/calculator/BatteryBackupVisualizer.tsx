@@ -152,7 +152,7 @@ export function BatteryBackupVisualizer({
       <div className="border-b border-slate-100 bg-slate-50/70 px-5 py-4 dark:border-slate-800 dark:bg-slate-800/40">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
               Required Nominal Battery Capacity
             </span>
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mt-0.5">
@@ -189,7 +189,7 @@ export function BatteryBackupVisualizer({
         {/* Specification Summary Table */}
         <div className="mt-4 overflow-hidden rounded-xl border border-slate-200/80 bg-white dark:border-slate-700 dark:bg-slate-900/60">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-semibold border-b border-slate-200 dark:border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-300 font-semibold border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="px-3 py-2">Specification</th>
                 <th className="px-3 py-2 text-right">Planning Result</th>
@@ -260,7 +260,7 @@ export function BatteryBackupVisualizer({
           </div>
           <div className="min-w-0">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white truncate">Battery Backup Technical Analysis</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-300">
               {grossCapacityKwh.toFixed(2)} kWh nominal • {chemistryLabel.split('(')[0]?.trim()} • {systemVoltageV} V system
             </p>
           </div>
@@ -279,7 +279,7 @@ export function BatteryBackupVisualizer({
               className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
                 activeTab === key
                   ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-200'
               }`}
             >
               <Icon className="h-3.5 w-3.5 shrink-0" />
@@ -365,7 +365,7 @@ export function BatteryBackupVisualizer({
                   )}
                 </div>
 
-                <p className="mt-3 text-[11px] text-slate-500 dark:text-slate-400">
+                <p className="mt-3 text-[11px] text-slate-500 dark:text-slate-300">
                   ⚡ Inverter converts {systemVoltageV}V DC → 120/240V AC at {inverterEfficiency}% inverter efficiency.
                   {temperatureDeratingFactor > 1 && (
                     <> Capacity uprated by {Math.round((temperatureDeratingFactor - 1) * 100)}% for cold temperature derating.</>
@@ -379,7 +379,7 @@ export function BatteryBackupVisualizer({
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">
                 Planning Cost Estimate
               </h4>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">
+              <p className="text-[11px] text-slate-500 dark:text-slate-300 mb-3">
                 Illustrative planning range based on configurable battery and inverter cost assumptions. Actual equipment, installation, permitting, wiring, protection equipment, taxes, and labor can vary significantly by location and project.
               </p>
               <div className="grid grid-cols-3 gap-3 text-center mb-3">
@@ -459,7 +459,7 @@ export function BatteryBackupVisualizer({
           <div className="space-y-4">
             <div>
               <h4 className="text-base font-bold text-slate-900 dark:text-white">How We Calculate Your Battery Size</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                 Exact mathematical derivation based on your active load profile ({totalLoadWatts} W for {estimatedRuntimeHours} hrs):
               </p>
             </div>
@@ -513,7 +513,7 @@ export function BatteryBackupVisualizer({
           <div className="space-y-5">
             <div>
               <h4 className="text-base font-bold text-slate-900 dark:text-white">Runtime Scenarios</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                 How backup duration changes as load increases or decreases from your current {formatWatts(totalLoadWatts)} selection.
               </p>
             </div>
@@ -555,8 +555,8 @@ export function BatteryBackupVisualizer({
                 },
               ].map(({ label, load, runtime, desc, color, border, bg, barColor, barWidth }) => (
                 <div key={label} className={`rounded-2xl border p-4 ${border} ${bg}`}>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{label}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{desc}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">{label}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">{desc}</p>
                   <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{formatWatts(load)} continuous</p>
                   <p className={`text-2xl font-black mt-1 ${color}`}>{formatHours(runtime)}</p>
                   <div className="mt-2 h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
@@ -569,7 +569,7 @@ export function BatteryBackupVisualizer({
               ))}
             </div>
 
-            <p className="text-[11px] italic text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] italic text-slate-500 dark:text-slate-300">
               ⚠️ Runtime estimates assume steady-state continuous loads. Actual run time varies with cycling duty cycles (refrigerators, pumps), battery age, cell temperature, and inverter operating efficiency curves.
             </p>
           </div>
@@ -580,7 +580,7 @@ export function BatteryBackupVisualizer({
           <div className="space-y-5">
             <div>
               <h4 className="text-base font-bold text-slate-900 dark:text-white">Battery Chemistry Characteristics</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                 Technical properties and planning characteristics across common battery technologies:
               </p>
             </div>
@@ -607,7 +607,7 @@ export function BatteryBackupVisualizer({
                           <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary">Active Selection</span>
                         )}
                       </div>
-                      <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{c.costMid}</span>
+                      <span className="text-xs font-semibold text-slate-500 dark:text-slate-300">{c.costMid}</span>
                     </div>
                     <div className="mt-2.5 grid grid-cols-2 gap-2 text-center">
                       {[
@@ -640,7 +640,7 @@ export function BatteryBackupVisualizer({
       </div>
 
       {/* Footer Disclaimer */}
-      <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-3 text-[11px] leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-400">
+      <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-3 text-[11px] leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-300">
         <p>
           <strong className="text-slate-700 dark:text-slate-300">Code, Safety & Engineering Notice:</strong>{' '}
           This calculator provides planning estimates, not an electrical design or code-compliance determination. Electrical, fire-code, and permitting requirements vary by jurisdiction (including NEC NFPA 70 Article 706, 2026 NFPA 855, and UL 9540 / UL 9540A). Consult the local Authority Having Jurisdiction (AHJ), utility, and a qualified electrical professional before installation.

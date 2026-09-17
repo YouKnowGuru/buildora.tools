@@ -74,7 +74,7 @@ export function ConcreteBlockVisualizer({
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">
               CMU Masonry Elevation & Core Layout
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-300">
               ASTM C90 Standard Running Bond ({blockSize} Nominal CMU)
             </p>
           </div>
@@ -88,7 +88,7 @@ export function ConcreteBlockVisualizer({
             className={`rounded-lg px-3 py-1 text-xs font-semibold transition ${
               activeTab === 'elevation'
                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
             }`}
           >
             Wall Elevation
@@ -99,7 +99,7 @@ export function ConcreteBlockVisualizer({
             className={`rounded-lg px-3 py-1 text-xs font-semibold transition ${
               activeTab === 'cross-section'
                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
             }`}
           >
             Core Cross-Section
@@ -437,7 +437,7 @@ export function ConcreteBlockVisualizer({
       {/* Bottom Summary Stats Strip */}
       <div className="grid grid-cols-2 divide-x divide-slate-200/70 border-t border-slate-200/70 bg-slate-50/70 dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900/50 sm:grid-cols-4">
         <div className="p-3 text-center sm:p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
             Total Blocks (w/ waste)
           </p>
           <p className="mt-1 text-lg font-extrabold text-primary sm:text-xl">
@@ -449,7 +449,7 @@ export function ConcreteBlockVisualizer({
         </div>
 
         <div className="p-3 text-center sm:p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
             Courses & Height
           </p>
           <p className="mt-1 text-lg font-extrabold text-slate-900 dark:text-white sm:text-xl">
@@ -461,7 +461,7 @@ export function ConcreteBlockVisualizer({
         </div>
 
         <div className="p-3 text-center sm:p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
             80lb Mortar Bags
           </p>
           <p className="mt-1 text-lg font-extrabold text-slate-900 dark:text-white sm:text-xl">
@@ -473,7 +473,7 @@ export function ConcreteBlockVisualizer({
         </div>
 
         <div className="p-3 text-center sm:p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
             Core Grout Fill
           </p>
           <p className="mt-1 text-lg font-extrabold text-slate-900 dark:text-white sm:text-xl">

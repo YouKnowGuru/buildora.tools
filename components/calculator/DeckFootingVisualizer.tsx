@@ -414,23 +414,23 @@ export function DeckFootingVisualizer({
       {/* Diagnostic badges */}
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{txt.loadPerPost}</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">{txt.loadPerPost}</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {loadPerPostLbs.toLocaleString()} <span className="text-xs font-normal text-slate-500">{isMetric ? 'kg' : 'lbs'}</span>
           </p>
         </div>
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{txt.footingSize}</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">{txt.footingSize}</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">{footingSize}</p>
         </div>
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{txt.sonotube}</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">{txt.sonotube}</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {isMetric ? `${recommendedSonotubeDiameterIn} cm dia` : `${recommendedSonotubeDiameterIn}" dia`}
           </p>
         </div>
         <div className="rounded-lg border border-slate-200/80 bg-white/70 p-2.5 text-center dark:border-slate-800 dark:bg-slate-900/70">
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{txt.concrete}</span>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-300">{txt.concrete}</span>
           <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
             {totalConcreteCuYd} <span className="text-xs font-normal text-slate-500">{isMetric ? 'm³' : 'cu yd'}</span>
           </p>
@@ -444,7 +444,7 @@ export function DeckFootingVisualizer({
             🪨 {txt.soilBearing}: <strong className="text-slate-900 dark:text-white">{soilBearingPsf.toLocaleString()} {isMetric ? 'kPa' : 'psf'}</strong> · {txt.tributary}: <strong className="text-slate-900 dark:text-white">{tributaryAreaPerPostSqFt} {isMetric ? 'm²/post' : 'sq ft/post'}</strong>
           </span>
         </div>
-        {codeNote && <p className="mt-1.5 text-[10px] text-slate-600 dark:text-slate-400">{codeNote}</p>}
+        {codeNote && <p className="mt-1.5 text-[10px] text-slate-600 dark:text-slate-300">{codeNote}</p>}
       </div>
     </div>
   );

@@ -85,6 +85,22 @@ export default async function RootLayout({
       className={inter.variable}
       suppressHydrationWarning
     >
+      <head>
+        {/*
+          Inline script runs synchronously before React hydrates so the
+          correct dark/light class is already on <html> when the first
+          paint happens. This prevents the server/client HTML mismatch
+          (React hydration error #418) caused by ThemeProvider applying
+          the class only after hydration.
+          Note: If this script content is modified, update THEME_SCRIPT_HASH
+          in middleware.ts ('sha256-pcK6pjNPLCCze0jcl7tkSEt5zgpsmAW+0Z2EvuCsvhE=').
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('buildora_theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t!=='light'&&d)){document.documentElement.classList.add('dark');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <JsonLd id="org-schema" data={organizationSchema(SITE_URL)} />
         {plausibleDomain && (
@@ -98,7 +114,7 @@ export default async function RootLayout({
         <ThemeProvider>
           <LanguageProvider locale={locale}>
             <Header />
-            <main className="flex-1" suppressHydrationWarning>{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
             <ScrollToTop />
           </LanguageProvider>

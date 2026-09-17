@@ -83,7 +83,7 @@ export function AboutPageClient() {
             ].map(({ value, label }) => (
               <div key={label} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card dark:border-slate-800 dark:bg-slate-900">
                 <p className="text-3xl font-extrabold text-primary">{value}</p>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{label}</p>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">{label}</p>
               </div>
             ))}
           </div>
@@ -105,7 +105,7 @@ export function AboutPageClient() {
                 {icon}
               </div>
               <h3 className="font-bold text-slate-900 dark:text-white">{title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{desc}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-300">{desc}</p>
             </div>
           ))}
         </div>

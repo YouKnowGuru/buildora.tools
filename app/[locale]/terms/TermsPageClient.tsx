@@ -10,7 +10,7 @@ export function TermsPageClient() {
       <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
         Terms of Service
       </h1>
-      <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+      <p className="mt-2 text-sm text-slate-500 dark:text-slate-300">
         {t.privacyPage.lastUpdated} September 2026
       </p>
 
