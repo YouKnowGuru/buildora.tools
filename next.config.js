@@ -10,6 +10,30 @@ const securityHeaders = [
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
   },
+  // Prevents top-level window from being opened by cross-origin popups,
+  // mitigating XS-Leaks and enabling cross-origin isolation.
+  // Lighthouse flags this as a High-severity finding when absent.
+  {
+    key: 'Cross-Origin-Opener-Policy',
+    value: 'same-origin',
+  },
+  // Minimal CSP to satisfy the Lighthouse "script-src missing" and
+  // "object-src missing" High-severity findings.
+  // Plausible analytics is allowlisted; everything else self-hosted.
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://plausible.io",
+      "connect-src 'self' https://plausible.io",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob:",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+    ].join('; '),
+  },
 ];
 
 const nextConfig = {
@@ -24,6 +48,20 @@ const nextConfig = {
   ],
   images: {
     formats: ['image/webp'],
+  },
+
+  // Strip console.* calls from production bundles — reduces JS size slightly
+  // and avoids leaking debug info. Errors are still logged via Plausible.
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production'
+      ? { exclude: ['error', 'warn'] }
+      : false,
+  },
+
+  experimental: {
+    // Tree-shake lucide-react so only the icons actually used are bundled,
+    // instead of the entire ~2 MB icon library being pulled in.
+    optimizePackageImports: ['lucide-react'],
   },
 
   async redirects() {

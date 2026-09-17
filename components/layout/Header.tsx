@@ -223,7 +223,7 @@ export function Header() {
 
         {/* Drawer footer */}
         <div className="border-t border-slate-100 px-5 py-4 dark:border-slate-800">
-          <p className="text-xs text-slate-400 dark:text-slate-500">
+          <p suppressHydrationWarning className="text-xs text-slate-400 dark:text-slate-500">
             © {new Date().getFullYear()} Buildora · Free construction calculators
           </p>
         </div>

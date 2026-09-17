@@ -125,7 +125,7 @@ export function Footer() {
       {/* ── Bottom bar ── */}
       <div className="border-t border-slate-800">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-slate-500 sm:flex-row sm:px-6">
-          <p>© {new Date().getFullYear()} Buildora. {t.footer.copyright}</p>
+          <p suppressHydrationWarning>© {new Date().getFullYear()} Buildora. {t.footer.copyright}</p>
           <p className="flex items-center gap-1">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
             All calculators are 100% free · No login required

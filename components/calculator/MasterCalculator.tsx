@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useId, useMemo, useRef, useEffect } from 'react';
+import { useState, useId, useMemo, useRef, useEffect, lazy, Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import type { ToolConfig, InputField } from '@/lib/registry/types';
 import { getFormula } from '@/lib/formulas';
@@ -12,24 +12,6 @@ import { ShareButton } from './ShareButton';
 import { PrintButton } from './PrintButton';
 import { PdfExportButton } from './PdfExportButton';
 import { ResultCard } from './ResultCard';
-import { SidingVisualizer } from './SidingVisualizer';
-import { StairVisualizer } from './StairVisualizer';
-import { AsphaltVisualizer } from './AsphaltVisualizer';
-import { DemolitionVisualizer } from './DemolitionVisualizer';
-import { TrenchVisualizer } from './TrenchVisualizer';
-import { WarehouseVisualizer } from './WarehouseVisualizer';
-import { SnowLoadVisualizer } from './SnowLoadVisualizer';
-import { SquareFootageVisualizer } from './SquareFootageVisualizer';
-import { SodVisualizer } from './SodVisualizer';
-import { InsulationVisualizer } from './InsulationVisualizer';
-import { SprayFoamVisualizer } from './SprayFoamVisualizer';
-import { WaterSoftenerVisualizer } from './WaterSoftenerVisualizer';
-import { ElectricalLoadVisualizer } from './ElectricalLoadVisualizer';
-import { DeckFootingVisualizer } from './DeckFootingVisualizer';
-import { ConcreteBlockVisualizer } from './ConcreteBlockVisualizer';
-import { BathroomRemodelVisualizer } from './BathroomRemodelVisualizer';
-import { BatteryBackupVisualizer } from './BatteryBackupVisualizer';
-import { HomeInspectionVisualizer } from './HomeInspectionVisualizer';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { getLocalizedTool } from '@/lib/i18n/toolTranslations';
 import {
@@ -39,6 +21,34 @@ import {
   type Currency,
 } from '@/lib/i18n/currencies';
 import { SlidersHorizontal, RotateCcw, ChevronDown } from 'lucide-react';
+
+// ── Lazy-loaded visualizers ────────────────────────────────────────────────
+// Each calculator page only ever renders ONE visualizer. By lazy-loading them
+// we split ~100-150 KiB of JS out of the initial bundle and into on-demand
+// chunks, significantly reducing parse/compile time on first load.
+const SidingVisualizer = lazy(() => import('./SidingVisualizer').then((m) => ({ default: m.SidingVisualizer })));
+const StairVisualizer = lazy(() => import('./StairVisualizer').then((m) => ({ default: m.StairVisualizer })));
+const AsphaltVisualizer = lazy(() => import('./AsphaltVisualizer').then((m) => ({ default: m.AsphaltVisualizer })));
+const DemolitionVisualizer = lazy(() => import('./DemolitionVisualizer').then((m) => ({ default: m.DemolitionVisualizer })));
+const TrenchVisualizer = lazy(() => import('./TrenchVisualizer').then((m) => ({ default: m.TrenchVisualizer })));
+const WarehouseVisualizer = lazy(() => import('./WarehouseVisualizer').then((m) => ({ default: m.WarehouseVisualizer })));
+const SnowLoadVisualizer = lazy(() => import('./SnowLoadVisualizer').then((m) => ({ default: m.SnowLoadVisualizer })));
+const SquareFootageVisualizer = lazy(() => import('./SquareFootageVisualizer').then((m) => ({ default: m.SquareFootageVisualizer })));
+const SodVisualizer = lazy(() => import('./SodVisualizer').then((m) => ({ default: m.SodVisualizer })));
+const InsulationVisualizer = lazy(() => import('./InsulationVisualizer').then((m) => ({ default: m.InsulationVisualizer })));
+const SprayFoamVisualizer = lazy(() => import('./SprayFoamVisualizer').then((m) => ({ default: m.SprayFoamVisualizer })));
+const WaterSoftenerVisualizer = lazy(() => import('./WaterSoftenerVisualizer').then((m) => ({ default: m.WaterSoftenerVisualizer })));
+const ElectricalLoadVisualizer = lazy(() => import('./ElectricalLoadVisualizer').then((m) => ({ default: m.ElectricalLoadVisualizer })));
+const DeckFootingVisualizer = lazy(() => import('./DeckFootingVisualizer').then((m) => ({ default: m.DeckFootingVisualizer })));
+const ConcreteBlockVisualizer = lazy(() => import('./ConcreteBlockVisualizer').then((m) => ({ default: m.ConcreteBlockVisualizer })));
+const BathroomRemodelVisualizer = lazy(() => import('./BathroomRemodelVisualizer').then((m) => ({ default: m.BathroomRemodelVisualizer })));
+const BatteryBackupVisualizer = lazy(() => import('./BatteryBackupVisualizer').then((m) => ({ default: m.BatteryBackupVisualizer })));
+const HomeInspectionVisualizer = lazy(() => import('./HomeInspectionVisualizer').then((m) => ({ default: m.HomeInspectionVisualizer })));
+
+/** Minimal skeleton shown while the lazy visualizer chunk is loading */
+function VisualizerSkeleton() {
+  return <div className="mb-4 h-48 animate-pulse rounded-xl bg-slate-100 dark:bg-slate-800" aria-hidden="true" />;
+}
 
 const DEBOUNCE_MS = 300;
 
@@ -1026,345 +1036,381 @@ export function MasterCalculator({ tool, initialValues = {} }: MasterCalculatorP
         </div>
 
         {tool.formulaId === 'siding' && (
-          <SidingVisualizer
-            buildingLength={Number(values.buildingLength ?? 40)}
-            buildingWidth={Number(values.buildingWidth ?? 30)}
-            wallHeight={Number(values.wallHeight ?? 9)}
-            gableShape={(values.gableShape as any) ?? 'triangle'}
-            gableHeight={Number(values.gableHeight ?? 5)}
-            doorCount={Number(values.doorCount ?? 2)}
-            windowCount={Number(values.windowCount ?? 8)}
-            garageDoorCount={Number(values.garageDoorCount ?? 1)}
-            units={units}
-            sidingMaterial={String(values.sidingMaterial ?? 'vinyl')}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <SidingVisualizer
+              buildingLength={Number(values.buildingLength ?? 40)}
+              buildingWidth={Number(values.buildingWidth ?? 30)}
+              wallHeight={Number(values.wallHeight ?? 9)}
+              gableShape={(values.gableShape as any) ?? 'triangle'}
+              gableHeight={Number(values.gableHeight ?? 5)}
+              doorCount={Number(values.doorCount ?? 2)}
+              windowCount={Number(values.windowCount ?? 8)}
+              garageDoorCount={Number(values.garageDoorCount ?? 1)}
+              units={units}
+              sidingMaterial={String(values.sidingMaterial ?? 'vinyl')}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'stairs' && (
-          <StairVisualizer
-            totalRise={Number(values.totalRise ?? 105)}
-            riserCount={Number((resultValues as any).numberOfRisers ?? 14)}
-            riserHeight={Number((resultValues as any).exactRiserHeight ?? 7.5)}
-            treadDepth={Number((resultValues as any).exactTreadDepth ?? 10.5)}
-            stairAngle={Number((resultValues as any).stairAngle ?? 35.5)}
-            stringerLengthFeet={Number((resultValues as any).stringerLengthFeet ?? 14)}
-            headroomOpening={Number((resultValues as any).headroomOpeningLength ?? 110)}
-            blondelValue={Number((resultValues as any).blondelComfortValue ?? 24.5)}
-            isCodeCompliant={Boolean((resultValues as any).isCodeCompliant ?? true)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <StairVisualizer
+              totalRise={Number(values.totalRise ?? 105)}
+              riserCount={Number((resultValues as any).numberOfRisers ?? 14)}
+              riserHeight={Number((resultValues as any).exactRiserHeight ?? 7.5)}
+              treadDepth={Number((resultValues as any).exactTreadDepth ?? 10.5)}
+              stairAngle={Number((resultValues as any).stairAngle ?? 35.5)}
+              stringerLengthFeet={Number((resultValues as any).stringerLengthFeet ?? 14)}
+              headroomOpening={Number((resultValues as any).headroomOpeningLength ?? 110)}
+              blondelValue={Number((resultValues as any).blondelComfortValue ?? 24.5)}
+              isCodeCompliant={Boolean((resultValues as any).isCodeCompliant ?? true)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'asphalt' && (
-          <AsphaltVisualizer
-            length={Number(values.length ?? 20)}
-            width={Number(values.width ?? 10)}
-            depth={Number(values.depth ?? 4)}
-            density={Number(values.density ?? 145)}
-            waste={Number(values.waste ?? 5)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <AsphaltVisualizer
+              length={Number(values.length ?? 20)}
+              width={Number(values.width ?? 10)}
+              depth={Number(values.depth ?? 4)}
+              density={Number(values.density ?? 145)}
+              waste={Number(values.waste ?? 5)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'demolition' && (
-          <DemolitionVisualizer
-            structureType={String(values.structureType ?? 'house-wood-frame')}
-            area={Number(values.area ?? 1500)}
-            stories={Number(values.stories ?? 1)}
-            method={String(values.method ?? 'mechanical')}
-            includeHaul={Boolean(values.includeHaul ?? true)}
-            dumpsterLoads={Number((resultValues as any).dumpsterLoads ?? 1)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <DemolitionVisualizer
+              structureType={String(values.structureType ?? 'house-wood-frame')}
+              area={Number(values.area ?? 1500)}
+              stories={Number(values.stories ?? 1)}
+              method={String(values.method ?? 'mechanical')}
+              includeHaul={Boolean(values.includeHaul ?? true)}
+              dumpsterLoads={Number((resultValues as any).dumpsterLoads ?? 1)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'trench' && (
-          <TrenchVisualizer
-            length={Number(values.length ?? 50)}
-            width={Number(values.width ?? 2)}
-            depth={Number(values.depth ?? 4)}
-            beddingMaterial={String(values.beddingMaterial ?? 'gravel')}
-            beddingDepth={Number(values.beddingDepth ?? 0.5)}
-            includeSpoilHaul={Boolean(values.includeSpoilHaul ?? true)}
-            truckLoads={Number((resultValues as any).truckLoads ?? 1)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <TrenchVisualizer
+              length={Number(values.length ?? 50)}
+              width={Number(values.width ?? 2)}
+              depth={Number(values.depth ?? 4)}
+              beddingMaterial={String(values.beddingMaterial ?? 'gravel')}
+              beddingDepth={Number(values.beddingDepth ?? 0.5)}
+              includeSpoilHaul={Boolean(values.includeSpoilHaul ?? true)}
+              truckLoads={Number((resultValues as any).truckLoads ?? 1)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'warehouse' && (
-          <WarehouseVisualizer
-            palletCount={Number(values.palletCount ?? 500)}
-            rackingType={String(values.rackingType ?? 'selective')}
-            rackLevels={Number(values.rackLevels ?? 4)}
-            aisleType={String(values.aisleType ?? 'wide')}
-            includeOpsArea={Boolean(values.includeOpsArea ?? true)}
-            groundPalletPositions={Number((resultValues as any).groundPalletPositions ?? 50)}
-            utilizationRate={Number((resultValues as any).utilizationRate ?? 50)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <WarehouseVisualizer
+              palletCount={Number(values.palletCount ?? 500)}
+              rackingType={String(values.rackingType ?? 'selective')}
+              rackLevels={Number(values.rackLevels ?? 4)}
+              aisleType={String(values.aisleType ?? 'wide')}
+              includeOpsArea={Boolean(values.includeOpsArea ?? true)}
+              groundPalletPositions={Number((resultValues as any).groundPalletPositions ?? 50)}
+              utilizationRate={Number((resultValues as any).utilizationRate ?? 50)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'snow' && (
-          <SnowLoadVisualizer
-            groundSnowLoad={Number(values.groundSnowLoad ?? 25)}
-            roofSlope={Number(values.roofSlope ?? 0)}
-            roofSurface={String(values.roofSurface ?? 'non-slippery')}
-            exposureCategory={String(values.exposureCategory ?? 'partial')}
-            thermalCategory={String(values.thermalCategory ?? 'heated')}
-            riskCategory={String(values.riskCategory ?? 'cat2')}
-            roofArea={Number(values.roofArea ?? 1500)}
-            includeDrift={Boolean(values.includeDrift ?? false)}
-            designSnowLoad={Number((resultValues as any).designSnowLoad ?? 20)}
-            driftHeight={Number((resultValues as any).driftHeight ?? 0)}
-            driftWidth={Number((resultValues as any).driftWidth ?? 0)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <SnowLoadVisualizer
+              groundSnowLoad={Number(values.groundSnowLoad ?? 25)}
+              roofSlope={Number(values.roofSlope ?? 0)}
+              roofSurface={String(values.roofSurface ?? 'non-slippery')}
+              exposureCategory={String(values.exposureCategory ?? 'partial')}
+              thermalCategory={String(values.thermalCategory ?? 'heated')}
+              riskCategory={String(values.riskCategory ?? 'cat2')}
+              roofArea={Number(values.roofArea ?? 1500)}
+              includeDrift={Boolean(values.includeDrift ?? false)}
+              designSnowLoad={Number((resultValues as any).designSnowLoad ?? 20)}
+              driftHeight={Number((resultValues as any).driftHeight ?? 0)}
+              driftWidth={Number((resultValues as any).driftWidth ?? 0)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'square-footage' && (
-          <SquareFootageVisualizer
-            shape={String(values.shape ?? 'rectangle')}
-            length={Number(values.length ?? 15)}
-            width={Number(values.width ?? 12)}
-            diameter={Number(values.diameter ?? 14)}
-            height={Number(values.height ?? 10)}
-            base1={Number(values.base1 ?? 16)}
-            base2={Number(values.base2 ?? 10)}
-            length2={Number(values.length2 ?? 8)}
-            width2={Number(values.width2 ?? 6)}
-            quantity={Number(values.quantity ?? 1)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <SquareFootageVisualizer
+              shape={String(values.shape ?? 'rectangle')}
+              length={Number(values.length ?? 15)}
+              width={Number(values.width ?? 12)}
+              diameter={Number(values.diameter ?? 14)}
+              height={Number(values.height ?? 10)}
+              base1={Number(values.base1 ?? 16)}
+              base2={Number(values.base2 ?? 10)}
+              length2={Number(values.length2 ?? 8)}
+              width2={Number(values.width2 ?? 6)}
+              quantity={Number(values.quantity ?? 1)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'sod' && (
-          <SodVisualizer
-            shape={String(values.shape ?? 'rectangle')}
-            length={Number(values.length ?? 30)}
-            width={Number(values.width ?? 20)}
-            diameter={Number(values.diameter ?? 20)}
-            height={Number(values.height ?? 15)}
-            base1={Number(values.base1 ?? 25)}
-            base2={Number(values.base2 ?? 15)}
-            length2={Number(values.length2 ?? 12)}
-            width2={Number(values.width2 ?? 10)}
-            quantity={Number(values.quantity ?? 1)}
-            waste={Number(values.waste ?? 10)}
-            rollCount={Number((resultValues as any).rollCount ?? 15)}
-            palletCount={Number((resultValues as any).palletCount ?? 1)}
-            sodType={String(values.sodType ?? 'fescue')}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <SodVisualizer
+              shape={String(values.shape ?? 'rectangle')}
+              length={Number(values.length ?? 30)}
+              width={Number(values.width ?? 20)}
+              diameter={Number(values.diameter ?? 20)}
+              height={Number(values.height ?? 15)}
+              base1={Number(values.base1 ?? 25)}
+              base2={Number(values.base2 ?? 15)}
+              length2={Number(values.length2 ?? 12)}
+              width2={Number(values.width2 ?? 10)}
+              quantity={Number(values.quantity ?? 1)}
+              waste={Number(values.waste ?? 10)}
+              rollCount={Number((resultValues as any).rollCount ?? 15)}
+              palletCount={Number((resultValues as any).palletCount ?? 1)}
+              sodType={String(values.sodType ?? 'fescue')}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'insulation' && (
-          <InsulationVisualizer
-            application={String(values.application ?? 'attic')}
-            area={Number(values.area ?? 1000)}
-            framingSpacing={String(values.framingSpacing ?? '16-oc')}
-            materialType={String(values.materialType ?? 'fiberglass-batt')}
-            targetRValue={Number((resultValues as any).effectiveTargetRValue ?? 38)}
-            thickness={Number((resultValues as any).requiredThicknessInches ?? 11.2)}
-            battPacks={Number((resultValues as any).battPacksNeeded ?? 0)}
-            blownBags={Number((resultValues as any).blownBagsNeeded ?? 0)}
-            boardFeet={Number((resultValues as any).sprayFoamBoardFeet ?? 0)}
-            units={units}
-            cavityWarning={(resultValues as any).cavityWarning}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <InsulationVisualizer
+              application={String(values.application ?? 'attic')}
+              area={Number(values.area ?? 1000)}
+              framingSpacing={String(values.framingSpacing ?? '16-oc')}
+              materialType={String(values.materialType ?? 'fiberglass-batt')}
+              targetRValue={Number((resultValues as any).effectiveTargetRValue ?? 38)}
+              thickness={Number((resultValues as any).requiredThicknessInches ?? 11.2)}
+              battPacks={Number((resultValues as any).battPacksNeeded ?? 0)}
+              blownBags={Number((resultValues as any).blownBagsNeeded ?? 0)}
+              boardFeet={Number((resultValues as any).sprayFoamBoardFeet ?? 0)}
+              units={units}
+              cavityWarning={(resultValues as any).cavityWarning}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'spray-foam' && (
-          <SprayFoamVisualizer
-            application={String(values.application ?? 'roof-deck-attic')}
-            foamType={String(values.foamType ?? 'closed-cell-2lb')}
-            thickness={Number((resultValues as any).appliedThicknessInches ?? values.thickness ?? 3.5)}
-            achievedRValue={Number((resultValues as any).achievedRValue ?? 23.5)}
-            boardFeet={Number((resultValues as any).boardFeetWithWaste ?? 3500)}
-            drumSets={Number((resultValues as any).drumSetsNeeded ?? 1)}
-            diyKits={Number((resultValues as any).diyKits600Needed ?? 6)}
-            isVaporRetarder={Boolean((resultValues as any).isVaporRetarder)}
-            vaporBarrierClass={String((resultValues as any).vaporBarrierClass ?? '')}
-            hasThermalBarrier={values.includeThermalBarrier === true || values.includeThermalBarrier === 1}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <SprayFoamVisualizer
+              application={String(values.application ?? 'roof-deck-attic')}
+              foamType={String(values.foamType ?? 'closed-cell-2lb')}
+              thickness={Number((resultValues as any).appliedThicknessInches ?? values.thickness ?? 3.5)}
+              achievedRValue={Number((resultValues as any).achievedRValue ?? 23.5)}
+              boardFeet={Number((resultValues as any).boardFeetWithWaste ?? 3500)}
+              drumSets={Number((resultValues as any).drumSetsNeeded ?? 1)}
+              diyKits={Number((resultValues as any).diyKits600Needed ?? 6)}
+              isVaporRetarder={Boolean((resultValues as any).isVaporRetarder)}
+              vaporBarrierClass={String((resultValues as any).vaporBarrierClass ?? '')}
+              hasThermalBarrier={values.includeThermalBarrier === true || values.includeThermalBarrier === 1}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'water-softener' && (
-          <WaterSoftenerVisualizer
-            recommendedGrainSize={Number((resultValues as any).recommendedGrainSize ?? 32000)}
-            recommendedResinCuFt={Number((resultValues as any).recommendedResinCuFt ?? 1.0)}
-            compensatedHardnessGPG={Number((resultValues as any).compensatedHardnessGPG ?? 25)}
-            rawHardnessGPG={Number((resultValues as any).rawHardnessGPG ?? 25)}
-            hardnessBadge={(resultValues as any).hardnessBadge ?? 'hard'}
-            hardnessClassification={String((resultValues as any).hardnessClassification ?? 'Hard')}
-            saltLbsPerYear={Number((resultValues as any).saltLbsPerYear ?? 300)}
-            regenFrequencyPerYear={Number((resultValues as any).regenFrequencyPerYear ?? 52)}
-            dailyWaterUsageGPD={Number((resultValues as any).dailyWaterUsageGPD ?? 300)}
-            targetGrainCapacity={Number((resultValues as any).targetGrainCapacity ?? 25200)}
-            peakFlowGPM={Number((resultValues as any).peakFlowGPM ?? 10)}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <WaterSoftenerVisualizer
+              recommendedGrainSize={Number((resultValues as any).recommendedGrainSize ?? 32000)}
+              recommendedResinCuFt={Number((resultValues as any).recommendedResinCuFt ?? 1.0)}
+              compensatedHardnessGPG={Number((resultValues as any).compensatedHardnessGPG ?? 25)}
+              rawHardnessGPG={Number((resultValues as any).rawHardnessGPG ?? 25)}
+              hardnessBadge={(resultValues as any).hardnessBadge ?? 'hard'}
+              hardnessClassification={String((resultValues as any).hardnessClassification ?? 'Hard')}
+              saltLbsPerYear={Number((resultValues as any).saltLbsPerYear ?? 300)}
+              regenFrequencyPerYear={Number((resultValues as any).regenFrequencyPerYear ?? 52)}
+              dailyWaterUsageGPD={Number((resultValues as any).dailyWaterUsageGPD ?? 300)}
+              targetGrainCapacity={Number((resultValues as any).targetGrainCapacity ?? 25200)}
+              peakFlowGPM={Number((resultValues as any).peakFlowGPM ?? 10)}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'electrical-load' && (
-          <ElectricalLoadVisualizer
-            squareFootage={Number(values.squareFootage ?? 2000)}
-            calculatedAmperes={Number((resultValues as any).calculatedAmperes ?? 138.5)}
-            recommendedServiceAmps={Number((resultValues as any).recommendedServiceAmps ?? 200)}
-            totalCalculatedLoadVA={Number((resultValues as any).totalCalculatedLoadVA ?? 33240)}
-            totalCalculatedLoadKW={Number((resultValues as any).totalCalculatedLoadKW ?? 33.24)}
-            panelUtilizationPercent={Number((resultValues as any).panelUtilizationPercent ?? 69.3)}
-            spareCapacityAmperes={Number((resultValues as any).spareCapacityAmperes ?? 61.5)}
-            servicePanelStatus={(resultValues as any).servicePanelStatus ?? 'adequate'}
-            serviceRecommendation={String((resultValues as any).serviceRecommendation ?? '200A Main Service (120/240V, 1-Phase)')}
-            governingHvacType={(resultValues as any).governingHvacType ?? 'heating'}
-            copperServiceConductor={String((resultValues as any).copperServiceConductor ?? '#2/0 AWG Cu (75°C)')}
-            aluminumServiceConductor={String((resultValues as any).aluminumServiceConductor ?? '#4/0 AWG Al (75°C)')}
-            evChargerAmps={String(values.evChargerAmps ?? '48a-115kw')}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <ElectricalLoadVisualizer
+              squareFootage={Number(values.squareFootage ?? 2000)}
+              calculatedAmperes={Number((resultValues as any).calculatedAmperes ?? 138.5)}
+              recommendedServiceAmps={Number((resultValues as any).recommendedServiceAmps ?? 200)}
+              totalCalculatedLoadVA={Number((resultValues as any).totalCalculatedLoadVA ?? 33240)}
+              totalCalculatedLoadKW={Number((resultValues as any).totalCalculatedLoadKW ?? 33.24)}
+              panelUtilizationPercent={Number((resultValues as any).panelUtilizationPercent ?? 69.3)}
+              spareCapacityAmperes={Number((resultValues as any).spareCapacityAmperes ?? 61.5)}
+              servicePanelStatus={(resultValues as any).servicePanelStatus ?? 'adequate'}
+              serviceRecommendation={String((resultValues as any).serviceRecommendation ?? '200A Main Service (120/240V, 1-Phase)')}
+              governingHvacType={(resultValues as any).governingHvacType ?? 'heating'}
+              copperServiceConductor={String((resultValues as any).copperServiceConductor ?? '#2/0 AWG Cu (75°C)')}
+              aluminumServiceConductor={String((resultValues as any).aluminumServiceConductor ?? '#4/0 AWG Al (75°C)')}
+              evChargerAmps={String(values.evChargerAmps ?? '48a-115kw')}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'deck-footing' && (
-          <DeckFootingVisualizer
-            deckLength={Number(values.deckLength ?? 16)}
-            deckWidth={Number(values.deckWidth ?? 12)}
-            deckShape={(values.deckShape as any) ?? 'rectangle'}
-            totalPosts={Number((resultValues as any).totalPosts ?? 6)}
-            postRows={Number(values.postRows ?? 2)}
-            postsPerRow={Number(values.postsPerRow ?? 3)}
-            loadPerPostLbs={Number((resultValues as any).loadPerPostLbs ?? 3200)}
-            footingDiameterIn={Number((resultValues as any).footingDiameterIn ?? 12)}
-            footingSideIn={Number((resultValues as any).footingSideIn ?? 11)}
-            footingShape={(values.footingShape as any) ?? 'round'}
-            recommendedSonotubeDiameterIn={Number((resultValues as any).recommendedSonotubeDiameterIn ?? 12)}
-            totalConcreteCuYd={Number((resultValues as any).totalConcreteCuYd ?? 1.8)}
-            soilBearingPsf={Number((resultValues as any).soilBearingPsf ?? 2500)}
-            tributaryAreaPerPostSqFt={Number((resultValues as any).tributaryAreaPerPostSqFt ?? 32)}
-            units={units}
-            codeNote={String((resultValues as any).codeNote ?? '')}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <DeckFootingVisualizer
+              deckLength={Number(values.deckLength ?? 16)}
+              deckWidth={Number(values.deckWidth ?? 12)}
+              deckShape={(values.deckShape as any) ?? 'rectangle'}
+              totalPosts={Number((resultValues as any).totalPosts ?? 6)}
+              postRows={Number(values.postRows ?? 2)}
+              postsPerRow={Number(values.postsPerRow ?? 3)}
+              loadPerPostLbs={Number((resultValues as any).loadPerPostLbs ?? 3200)}
+              footingDiameterIn={Number((resultValues as any).footingDiameterIn ?? 12)}
+              footingSideIn={Number((resultValues as any).footingSideIn ?? 11)}
+              footingShape={(values.footingShape as any) ?? 'round'}
+              recommendedSonotubeDiameterIn={Number((resultValues as any).recommendedSonotubeDiameterIn ?? 12)}
+              totalConcreteCuYd={Number((resultValues as any).totalConcreteCuYd ?? 1.8)}
+              soilBearingPsf={Number((resultValues as any).soilBearingPsf ?? 2500)}
+              tributaryAreaPerPostSqFt={Number((resultValues as any).tributaryAreaPerPostSqFt ?? 32)}
+              units={units}
+              codeNote={String((resultValues as any).codeNote ?? '')}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'concrete-block' && (
-          <ConcreteBlockVisualizer
-            wallLength={Number(values.wallLength ?? 20)}
-            wallHeight={Number(values.wallHeight ?? 8)}
-            blockSize={String(values.blockSize ?? '8x8x16')}
-            openingsArea={Number(values.openingsArea ?? 0)}
-            totalBlocksWithWaste={Number((resultValues as any).totalBlocksWithWaste ?? 189)}
-            exactBlocks={Number((resultValues as any).exactBlocks ?? 180)}
-            numberOfCourses={Number((resultValues as any).numberOfCourses ?? 12)}
-            blocksPerCourse={Number((resultValues as any).blocksPerCourse ?? 15)}
-            mortarBags80lb={Number((resultValues as any).mortarBags80lb ?? 15)}
-            groutVolumeCuYd={Number((resultValues as any).groutVolumeCuYd ?? 0)}
-            groutFill={String(values.groutFill ?? 'none')}
-            includeRebar={values.includeRebar !== false && values.includeRebar !== 0}
-            rebarSpacing={String(values.rebarSpacing ?? '32')}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <ConcreteBlockVisualizer
+              wallLength={Number(values.wallLength ?? 20)}
+              wallHeight={Number(values.wallHeight ?? 8)}
+              blockSize={String(values.blockSize ?? '8x8x16')}
+              openingsArea={Number(values.openingsArea ?? 0)}
+              totalBlocksWithWaste={Number((resultValues as any).totalBlocksWithWaste ?? 189)}
+              exactBlocks={Number((resultValues as any).exactBlocks ?? 180)}
+              numberOfCourses={Number((resultValues as any).numberOfCourses ?? 12)}
+              blocksPerCourse={Number((resultValues as any).blocksPerCourse ?? 15)}
+              mortarBags80lb={Number((resultValues as any).mortarBags80lb ?? 15)}
+              groutVolumeCuYd={Number((resultValues as any).groutVolumeCuYd ?? 0)}
+              groutFill={String(values.groutFill ?? 'none')}
+              includeRebar={values.includeRebar !== false && values.includeRebar !== 0}
+              rebarSpacing={String(values.rebarSpacing ?? '32')}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'bathroom-remodel' && (
-          <BathroomRemodelVisualizer
-            bathroomType={(values.bathroomType as any) ?? 'full'}
-            roomLength={Number(values.roomLength ?? 8)}
-            roomWidth={Number(values.roomWidth ?? 6)}
-            finishTier={(values.finishTier as any) ?? 'mid-range'}
-            layoutChange={(values.layoutChange as any) ?? 'none'}
-            includeTileShower={values.includeTileShower !== false && values.includeTileShower !== 0}
-            includeFreestandingTub={Boolean(values.includeFreestandingTub)}
-            includeDoubleVanity={Boolean(values.includeDoubleVanity)}
-            includeHeatedFloor={Boolean(values.includeHeatedFloor)}
-            diyDemolition={Boolean(values.diyDemolition)}
-            region={(values.region as any) ?? 'us-national'}
-            totalEstimatedCost={Number((resultValues as any).totalEstimatedCost ?? 14760)}
-            estimatedCostLow={Number((resultValues as any).estimatedCostLow ?? 12546)}
-            estimatedCostHigh={Number((resultValues as any).estimatedCostHigh ?? 17712)}
-            costPerSqFt={Number((resultValues as any).costPerSqFt ?? 308)}
-            squareFootage={Number((resultValues as any).squareFootage ?? 48)}
-            laborCost={Number((resultValues as any).laborCost ?? 8266)}
-            materialsCost={Number((resultValues as any).materialsCost ?? 6494)}
-            plumbingCost={Number((resultValues as any).plumbingCost ?? 3100)}
-            tileWaterproofingCost={Number((resultValues as any).tileWaterproofingCost ?? 3542)}
-            vanityCountertopCost={Number((resultValues as any).vanityCountertopCost ?? 2214)}
-            showerTubCost={Number((resultValues as any).showerTubCost ?? 1919)}
-            electricalCost={Number((resultValues as any).electricalCost ?? 1328)}
-            demoCost={Number((resultValues as any).demoCost ?? 1033)}
-            paintingTrimCost={Number((resultValues as any).paintingTrimCost ?? 738)}
-            permitsAndContingency={Number((resultValues as any).permitsAndContingency ?? 886)}
-            estimatedWeeksMin={Number((resultValues as any).estimatedWeeksMin ?? 3)}
-            estimatedWeeksMax={Number((resultValues as any).estimatedWeeksMax ?? 4)}
-            currencySymbol={activeCurrency.symbol}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <BathroomRemodelVisualizer
+              bathroomType={(values.bathroomType as any) ?? 'full'}
+              roomLength={Number(values.roomLength ?? 8)}
+              roomWidth={Number(values.roomWidth ?? 6)}
+              finishTier={(values.finishTier as any) ?? 'mid-range'}
+              layoutChange={(values.layoutChange as any) ?? 'none'}
+              includeTileShower={values.includeTileShower !== false && values.includeTileShower !== 0}
+              includeFreestandingTub={Boolean(values.includeFreestandingTub)}
+              includeDoubleVanity={Boolean(values.includeDoubleVanity)}
+              includeHeatedFloor={Boolean(values.includeHeatedFloor)}
+              diyDemolition={Boolean(values.diyDemolition)}
+              region={(values.region as any) ?? 'us-national'}
+              totalEstimatedCost={Number((resultValues as any).totalEstimatedCost ?? 14760)}
+              estimatedCostLow={Number((resultValues as any).estimatedCostLow ?? 12546)}
+              estimatedCostHigh={Number((resultValues as any).estimatedCostHigh ?? 17712)}
+              costPerSqFt={Number((resultValues as any).costPerSqFt ?? 308)}
+              squareFootage={Number((resultValues as any).squareFootage ?? 48)}
+              laborCost={Number((resultValues as any).laborCost ?? 8266)}
+              materialsCost={Number((resultValues as any).materialsCost ?? 6494)}
+              plumbingCost={Number((resultValues as any).plumbingCost ?? 3100)}
+              tileWaterproofingCost={Number((resultValues as any).tileWaterproofingCost ?? 3542)}
+              vanityCountertopCost={Number((resultValues as any).vanityCountertopCost ?? 2214)}
+              showerTubCost={Number((resultValues as any).showerTubCost ?? 1919)}
+              electricalCost={Number((resultValues as any).electricalCost ?? 1328)}
+              demoCost={Number((resultValues as any).demoCost ?? 1033)}
+              paintingTrimCost={Number((resultValues as any).paintingTrimCost ?? 738)}
+              permitsAndContingency={Number((resultValues as any).permitsAndContingency ?? 886)}
+              estimatedWeeksMin={Number((resultValues as any).estimatedWeeksMin ?? 3)}
+              estimatedWeeksMax={Number((resultValues as any).estimatedWeeksMax ?? 4)}
+              currencySymbol={activeCurrency.symbol}
+              units={units}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'battery-backup' && (
-          <BatteryBackupVisualizer
-            totalLoadWatts={Number((resultValues as any).totalLoadWatts ?? 350)}
-            totalLoadKw={Number((resultValues as any).totalLoadKw ?? 0.35)}
-            grossCapacityWh={Number((resultValues as any).grossCapacityWh ?? 3763)}
-            grossCapacityKwh={Number((resultValues as any).grossCapacityKwh ?? 3.76)}
-            usableCapacityKwh={Number((resultValues as any).usableCapacityKwh ?? 3.01)}
-            deliveredAcEnergyKwh={Number((resultValues as any).deliveredAcEnergyKwh ?? 2.80)}
-            batteryAh={Number((resultValues as any).batteryAh ?? 78.4)}
-            systemVoltageV={Number((resultValues as any).systemVoltageV ?? 48)}
-            recommendedInverterSizeW={Number((resultValues as any).recommendedInverterSizeW ?? 500)}
-            inverterEfficiency={Number(values.inverterEfficiency ?? 93)}
-            estimatedRuntimeHours={Number((resultValues as any).estimatedRuntimeHours ?? 8)}
-            runtimeAtHalfLoad={Number((resultValues as any).runtimeAtHalfLoad ?? 16)}
-            runtimeAtDoubleLoad={Number((resultValues as any).runtimeAtDoubleLoad ?? 4)}
-            solarPanelWatts={Number((resultValues as any).solarPanelWatts ?? 602)}
-            numberOfSolarPanels={Number((resultValues as any).numberOfSolarPanels ?? 2)}
-            includeSolarRecharge={Boolean(values.includeSolarRecharge && values.includeSolarRecharge !== 'false')}
-            chemistryLabel={String((resultValues as any).chemistryLabel ?? 'LiFePO₄')}
-            cycleLife={Number((resultValues as any).cycleLife ?? 3500)}
-            recommendedDod={Number((resultValues as any).recommendedDod ?? 80)}
-            actualDodUsed={Number(values.depthOfDischarge ?? 80)}
-            batteryBankCostLow={Number((resultValues as any).batteryBankCostLow ?? 1505)}
-            batteryBankCostMid={Number((resultValues as any).batteryBankCostMid ?? 2258)}
-            batteryBankCostHigh={Number((resultValues as any).batteryBankCostHigh ?? 3010)}
-            totalSystemCostLow={Number((resultValues as any).totalSystemCostLow ?? 1605)}
-            totalSystemCostHigh={Number((resultValues as any).totalSystemCostHigh ?? 3260)}
-            costAssumptions={(resultValues as any).costAssumptions}
-            isDodWarning={Boolean((resultValues as any).isDodWarning)}
-            isUndersized={Boolean((resultValues as any).isUndersized)}
-            temperatureDeratingFactor={Number((resultValues as any).temperatureDeratingFactor ?? 1)}
-            currencySymbol={activeCurrency.symbol}
-            batteryChemistry={String(values.batteryChemistry ?? 'lifepo4')}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <BatteryBackupVisualizer
+              totalLoadWatts={Number((resultValues as any).totalLoadWatts ?? 350)}
+              totalLoadKw={Number((resultValues as any).totalLoadKw ?? 0.35)}
+              grossCapacityWh={Number((resultValues as any).grossCapacityWh ?? 3763)}
+              grossCapacityKwh={Number((resultValues as any).grossCapacityKwh ?? 3.76)}
+              usableCapacityKwh={Number((resultValues as any).usableCapacityKwh ?? 3.01)}
+              deliveredAcEnergyKwh={Number((resultValues as any).deliveredAcEnergyKwh ?? 2.80)}
+              batteryAh={Number((resultValues as any).batteryAh ?? 78.4)}
+              systemVoltageV={Number((resultValues as any).systemVoltageV ?? 48)}
+              recommendedInverterSizeW={Number((resultValues as any).recommendedInverterSizeW ?? 500)}
+              inverterEfficiency={Number(values.inverterEfficiency ?? 93)}
+              estimatedRuntimeHours={Number((resultValues as any).estimatedRuntimeHours ?? 8)}
+              runtimeAtHalfLoad={Number((resultValues as any).runtimeAtHalfLoad ?? 16)}
+              runtimeAtDoubleLoad={Number((resultValues as any).runtimeAtDoubleLoad ?? 4)}
+              solarPanelWatts={Number((resultValues as any).solarPanelWatts ?? 602)}
+              numberOfSolarPanels={Number((resultValues as any).numberOfSolarPanels ?? 2)}
+              includeSolarRecharge={Boolean(values.includeSolarRecharge && values.includeSolarRecharge !== 'false')}
+              chemistryLabel={String((resultValues as any).chemistryLabel ?? 'LiFePO₄')}
+              cycleLife={Number((resultValues as any).cycleLife ?? 3500)}
+              recommendedDod={Number((resultValues as any).recommendedDod ?? 80)}
+              actualDodUsed={Number(values.depthOfDischarge ?? 80)}
+              batteryBankCostLow={Number((resultValues as any).batteryBankCostLow ?? 1505)}
+              batteryBankCostMid={Number((resultValues as any).batteryBankCostMid ?? 2258)}
+              batteryBankCostHigh={Number((resultValues as any).batteryBankCostHigh ?? 3010)}
+              totalSystemCostLow={Number((resultValues as any).totalSystemCostLow ?? 1605)}
+              totalSystemCostHigh={Number((resultValues as any).totalSystemCostHigh ?? 3260)}
+              costAssumptions={(resultValues as any).costAssumptions}
+              isDodWarning={Boolean((resultValues as any).isDodWarning)}
+              isUndersized={Boolean((resultValues as any).isUndersized)}
+              temperatureDeratingFactor={Number((resultValues as any).temperatureDeratingFactor ?? 1)}
+              currencySymbol={activeCurrency.symbol}
+              batteryChemistry={String(values.batteryChemistry ?? 'lifepo4')}
+            />
+          </Suspense>
         )}
 
         {tool.formulaId === 'home-inspection' && (
-          <HomeInspectionVisualizer
-            homeArea={Number(values.homeArea ?? 2000)}
-            propertyType={String(values.propertyType ?? 'single-family')}
-            homeAge={String(values.homeAge ?? 'age-11-25')}
-            foundation={String(values.foundation ?? 'slab')}
-            region={String(values.region ?? 'us-national')}
-            includeRadon={Boolean(values.includeRadon && values.includeRadon !== 'false')}
-            includeMold={Boolean(values.includeMold && values.includeMold !== 'false')}
-            includeSewerScope={Boolean(values.includeSewerScope && values.includeSewerScope !== 'false')}
-            includeTermite={Boolean(values.includeTermite && values.includeTermite !== 'false')}
-            includeWellWater={Boolean(values.includeWellWater && values.includeWellWater !== 'false')}
-            rushService={Boolean(values.rushService && values.rushService !== 'false')}
-            priceOverride={values.priceOverride !== '' && values.priceOverride !== undefined ? Number(values.priceOverride) : undefined}
-            baseInspectionFee={Number((resultValues as any).baseInspectionFee ?? 340)}
-            radonCost={Number((resultValues as any).radonCost ?? 0)}
-            moldCost={Number((resultValues as any).moldCost ?? 0)}
-            sewerScopeCost={Number((resultValues as any).sewerScopeCost ?? 0)}
-            termiteCost={Number((resultValues as any).termiteCost ?? 0)}
-            wellWaterCost={Number((resultValues as any).wellWaterCost ?? 0)}
-            rushSurcharge={Number((resultValues as any).rushSurcharge ?? 0)}
-            totalCostLow={Number((resultValues as any).totalCostLow ?? 289)}
-            totalCostMid={Number((resultValues as any).totalCostMid ?? 340)}
-            totalCostHigh={Number((resultValues as any).totalCostHigh ?? 425)}
-            costPerSqFt={Number((resultValues as any).costPerSqFt ?? 0.17)}
-            estimatedHours={Number((resultValues as any).estimatedHours ?? 2.5)}
-            currencySymbol={activeCurrency.symbol}
-            units={units}
-          />
+          <Suspense fallback={<VisualizerSkeleton />}>
+            <HomeInspectionVisualizer
+              homeArea={Number(values.homeArea ?? 2000)}
+              propertyType={String(values.propertyType ?? 'single-family')}
+              homeAge={String(values.homeAge ?? 'age-11-25')}
+              foundation={String(values.foundation ?? 'slab')}
+              region={String(values.region ?? 'us-national')}
+              includeRadon={Boolean(values.includeRadon && values.includeRadon !== 'false')}
+              includeMold={Boolean(values.includeMold && values.includeMold !== 'false')}
+              includeSewerScope={Boolean(values.includeSewerScope && values.includeSewerScope !== 'false')}
+              includeTermite={Boolean(values.includeTermite && values.includeTermite !== 'false')}
+              includeWellWater={Boolean(values.includeWellWater && values.includeWellWater !== 'false')}
+              rushService={Boolean(values.rushService && values.rushService !== 'false')}
+              priceOverride={values.priceOverride !== '' && values.priceOverride !== undefined ? Number(values.priceOverride) : undefined}
+              baseInspectionFee={Number((resultValues as any).baseInspectionFee ?? 340)}
+              radonCost={Number((resultValues as any).radonCost ?? 0)}
+              moldCost={Number((resultValues as any).moldCost ?? 0)}
+              sewerScopeCost={Number((resultValues as any).sewerScopeCost ?? 0)}
+              termiteCost={Number((resultValues as any).termiteCost ?? 0)}
+              wellWaterCost={Number((resultValues as any).wellWaterCost ?? 0)}
+              rushSurcharge={Number((resultValues as any).rushSurcharge ?? 0)}
+              totalCostLow={Number((resultValues as any).totalCostLow ?? 289)}
+              totalCostMid={Number((resultValues as any).totalCostMid ?? 340)}
+              totalCostHigh={Number((resultValues as any).totalCostHigh ?? 425)}
+              costPerSqFt={Number((resultValues as any).costPerSqFt ?? 0.17)}
+              estimatedHours={Number((resultValues as any).estimatedHours ?? 2.5)}
+              currencySymbol={activeCurrency.symbol}
+              units={units}
+            />
+          </Suspense>
         )}
 
         <div className="space-y-5">
