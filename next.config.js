@@ -26,6 +26,19 @@ const nextConfig = {
     formats: ['image/webp'],
   },
 
+  async redirects() {
+    return [
+      // www → non-www (permanent). Handles both http and https www variants.
+      // This stops Google ever treating www.buildora.tools as a separate site.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.buildora.tools' }],
+        destination: 'https://buildora.tools/:path*',
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
