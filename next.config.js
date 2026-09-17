@@ -27,7 +27,7 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'sha256-pcK6pjNPLCCze0jcl7tkSEt5zgpsmAW+0Z2EvuCsvhE=' https://plausible.io",
+      "script-src 'self' 'unsafe-inline' https://plausible.io",
       "connect-src 'self' https://plausible.io",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
@@ -65,12 +65,6 @@ const nextConfig = {
     // Tree-shake lucide-react and zod so only the exports actually used
     // are bundled, instead of the entire library being pulled in.
     optimizePackageImports: ['lucide-react', 'zod'],
-
-    // Use the project's browserslist config (package.json) to determine
-    // which JS transforms and polyfills SWC emits. Modern browser targets
-    // mean SWC skips ~17 KiB of polyfills for Array.at, Object.fromEntries,
-    // etc. that Lighthouse flagged as "legacy JavaScript".
-    browsersListForSwc: true,
   },
 
   async redirects() {

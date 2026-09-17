@@ -20,14 +20,10 @@ import { LOCALE_CODES, DEFAULT_LOCALE } from '@/lib/seo/locale-urls';
 // to exist on this Next.js site.
 const suspiciousPatterns = [/\.php$/i, /wp-admin/i, /wp-login/i, /\.env$/i, /\.git\//i];
 
-// SHA-256 of the inline theme initialization script in app/[locale]/layout.tsx.
-// Required because 'nonce-...' causes modern browsers to ignore 'unsafe-inline'.
-const THEME_SCRIPT_HASH = "'sha256-pcK6pjNPLCCze0jcl7tkSEt5zgpsmAW+0Z2EvuCsvhE='";
-
 function createContentSecurityPolicy(nonce: string): string {
   const scriptSrc = process.env.NODE_ENV === 'production'
-    ? `script-src 'self' 'nonce-${nonce}' ${THEME_SCRIPT_HASH} 'unsafe-inline' https://plausible.io`
-    : `script-src 'self' 'nonce-${nonce}' ${THEME_SCRIPT_HASH} 'unsafe-inline' 'unsafe-eval' https://plausible.io`;
+    ? `script-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://plausible.io`
+    : `script-src 'self' 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' https://plausible.io`;
 
   return [
     "default-src 'self'",
