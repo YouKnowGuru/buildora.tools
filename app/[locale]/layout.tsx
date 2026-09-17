@@ -83,9 +83,10 @@ export default async function RootLayout({
       lang={locale}
       dir={isRtl ? 'rtl' : 'ltr'}
       className={inter.variable}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="flex min-h-screen flex-col font-sans antialiased">
+      <body className="flex min-h-screen flex-col font-sans antialiased" suppressHydrationWarning>
         <JsonLd id="org-schema" data={organizationSchema(SITE_URL)} />
         {plausibleDomain && (
           <Script

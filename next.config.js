@@ -1,4 +1,7 @@
+const isProd = process.env.NODE_ENV === 'production';
+
 const securityHeaders = [
+  // HSTS: only meaningful over HTTPS (ignored by browsers on plain HTTP / dev)
   {
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains; preload',
@@ -10,13 +13,12 @@ const securityHeaders = [
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
   },
-  // Prevents top-level window from being opened by cross-origin popups,
-  // mitigating XS-Leaks and enabling cross-origin isolation.
-  // Lighthouse flags this as a High-severity finding when absent.
-  {
-    key: 'Cross-Origin-Opener-Policy',
-    value: 'same-origin',
-  },
+  // COOP: browsers only honour this on secure origins (HTTPS or localhost).
+  // Sending it on a LAN IP (192.168.x.x) over plain HTTP causes a console
+  // warning and is silently ignored, so we omit it in dev.
+  ...(isProd
+    ? [{ key: 'Cross-Origin-Opener-Policy', value: 'same-origin' }]
+    : []),
   // Minimal CSP to satisfy the Lighthouse "script-src missing" and
   // "object-src missing" High-severity findings.
   // Plausible analytics is allowlisted; everything else self-hosted.
