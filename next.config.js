@@ -36,6 +36,27 @@ const nextConfig = {
         destination: 'https://buildora.tools/:path*',
         permanent: true,
       },
+      // 404 cleanup: Redirect uncrawled/unbuilt tools to live counterparts
+      {
+        source: '/calculators/concrete-calculator',
+        destination: '/calculators/concrete-block-calculator',
+        permanent: true,
+      },
+      {
+        source: '/:locale/calculators/concrete-calculator',
+        destination: '/:locale/calculators/concrete-block-calculator',
+        permanent: true,
+      },
+      {
+        source: '/calculators/roofing-shingle-calculator',
+        destination: '/calculators',
+        permanent: true,
+      },
+      {
+        source: '/:locale/calculators/roofing-shingle-calculator',
+        destination: '/:locale/calculators',
+        permanent: true,
+      },
     ];
   },
 

@@ -135,7 +135,7 @@ In addition to siding planks, complete exterior installations require dedicated 
 Explore our connected suite of professional construction calculators to estimate your entire building envelope:
 
 - **[Square Footage Calculator](/calculators/square-footage-calculator):** Calculate interior room areas, tile boxes, carpet square yards, and wall square footage.
-- **[Roofing Shingle Calculator](/calculators/roofing-shingle-calculator):** Estimate roofing squares, bundles, underlayment rolls, and hip/ridge caps for pitched roofs.
+- **[Spray Foam Insulation Cost Calculator](/calculators/spray-foam-insulation-cost-calculator):** Estimate spray foam board feet and building envelope insulation costs.
 - **[Asphalt Calculator](/calculators/asphalt-calculator):** Estimate asphalt tonnage, cubic yards, and hot-mix paving costs for driveways and parking lots.
 - **[Trench Calculator](/calculators/trench-calculator):** Calculate excavation volume, bedding aggregate, and backfill soil for perimeter foundation drainage.
 - **[Demolition Cost Calculator](/calculators/demolition-cost-calculator):** Estimate tear-off and debris removal costs for existing siding and building structures.

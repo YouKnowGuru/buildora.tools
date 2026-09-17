@@ -192,5 +192,5 @@ Measure from the floor joist bottom (not the drywall ceiling) to the step nosing
 - **[Square Footage Calculator](/calculators/square-footage-calculator):** Calculate subfloor area, landing square footage, and carpet/tile boxes for your stairwell.
 - **[Siding Calculator](/calculators/siding-calculator):** Estimate exterior siding squares, panels, and corner trims for exterior stair enclosures.
 - **[Demolition Cost Calculator](/calculators/demolition-cost-calculator):** Estimate removal and debris costs for tearing out old staircases during remodeling.
-- **[Roofing Shingle Calculator](/calculators/roofing-shingle-calculator):** Estimate roofing materials for stair dormers and attic access structures.
+- **[Deck Footing Calculator](/calculators/deck-footing-calculator):** Calculate concrete volume and footing depths for exterior stairs and deck landings.
 

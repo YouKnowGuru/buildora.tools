@@ -152,6 +152,6 @@ Multiply the footing area by thickness by the number of posts, then divide by 27
 
 ## Related Calculators
 
-- **[Concrete Calculator](/calculators/concrete-calculator)** — convert footing volumes to bags, cubic yards, and cost for the whole pour.
+- **[Concrete Block Calculator](/calculators/concrete-block-calculator)** — calculate CMU block quantities, core fill concrete, and mortar for foundation piers and retaining walls.
 - **[Square Footage Calculator](/calculators/square-footage-calculator)** — verify deck and site area measurements before sizing.
 - **[Stair Calculator](/calculators/stair-calculator)** — size deck stairs and stringers to code when your deck has a step-down.
