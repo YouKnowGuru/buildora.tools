@@ -14,7 +14,9 @@ import { SITE_URL, LOCALE_CODES, isLocale, hreflangAlternates } from '@/lib/seo/
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  // 500 is not used by the critical hero and costs another font request.
+  // Browsers synthesize that intermediate weight where it is used below the fold.
+  weight: ['400', '600', '700'],
   variable: '--font-inter',
   display: 'swap',
   preload: true,
@@ -83,18 +85,7 @@ export default async function RootLayout({
       className={inter.variable}
       suppressHydrationWarning
     >
-      <body
-        className="flex min-h-screen flex-col font-sans antialiased"
-        suppressHydrationWarning
-      >
-        {/* Theme init — runs before paint to prevent dark-mode flash */}
-        <script
-          id="theme-init"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('buildora_theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})()`,
-          }}
-        />
+      <body className="flex min-h-screen flex-col font-sans antialiased">
         <JsonLd id="org-schema" data={organizationSchema(SITE_URL)} />
         {plausibleDomain && (
           <Script

@@ -1,9 +1,7 @@
-'use client';
-
 import { LocaleLink as Link } from '@/components/layout/LocaleLink';
 import { tools, getToolBySlug } from '@/lib/registry/tools';
 import { NewsletterForm } from '@/components/calculator/NewsletterForm';
-import { useLanguage } from '@/lib/i18n/LanguageContext';
+import type { Translation } from '@/lib/i18n/translations';
 import {
   ArrowRight, Calculator, Smartphone, Shield,
   Zap, CheckCircle2, Users, Lock,
@@ -63,8 +61,14 @@ const TRUST_ITEMS = [
   },
 ];
 
-export function HomePageClient() {
-  const { t } = useLanguage();
+type HomePageProps = {
+  t: Translation;
+};
+
+// This component intentionally stays server-rendered. The newsletter is the
+// only interactive island on the page; making the whole landing page a client
+// component made the hero wait on a large, unnecessary hydration boundary.
+export function HomePageClient({ t }: HomePageProps) {
 
   return (
     <div>
@@ -82,12 +86,12 @@ export function HomePageClient() {
           className="pointer-events-none absolute inset-0 bg-hero-gradient dark:bg-hero-gradient-dark"
         />
         {/* Decorative blobs */}
-        <div aria-hidden="true" className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary-200/30 blur-3xl dark:bg-primary-900/20" />
-        <div aria-hidden="true" className="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 rounded-full bg-primary-100/40 blur-3xl dark:bg-primary-950/30" />
+        <div aria-hidden="true" className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary-200/30 dark:bg-primary-900/20" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 rounded-full bg-primary-100/40 dark:bg-primary-950/30" />
 
         <div className="relative mx-auto max-w-6xl px-4 py-24 text-center sm:px-6 lg:py-32">
           {/* Badge */}
-          <div className="animate-fade-in mb-6 inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-primary shadow-sm backdrop-blur-sm dark:border-primary-800/60 dark:bg-slate-900/60 dark:text-primary-300">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-primary shadow-sm dark:border-primary-800/60 dark:bg-slate-900/60 dark:text-primary-300">
             <span className="h-1.5 w-1.5 rounded-full bg-primary dark:bg-primary-400" aria-hidden="true" />
             {tools.length}+ Free Professional Calculators
           </div>
@@ -95,7 +99,7 @@ export function HomePageClient() {
           {/* Headline */}
           <h1
             id="hero-heading"
-            className="animate-slide-up mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl"
+            className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl"
           >
             {t.homepage.heroHeading.split(' ').map((word, i) =>
               i === 0 ? (
@@ -107,12 +111,12 @@ export function HomePageClient() {
           </h1>
 
           {/* Sub-headline */}
-          <p className="animate-slide-up-delay mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
             {t.homepage.heroSubhead}
           </p>
 
           {/* CTA Buttons */}
-          <div className="animate-slide-up-delay-2 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             {featuredTool && (
               <Link
                 href={`/calculators/${featuredTool.slug}`}
@@ -124,16 +128,16 @@ export function HomePageClient() {
             )}
             <Link
               href="/calculators"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white/80 px-7 py-3.5 text-sm font-semibold text-slate-700 shadow-sm backdrop-blur-sm transition hover:border-primary hover:text-primary hover:-translate-y-0.5 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:border-primary dark:hover:text-primary"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white/80 px-7 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-primary hover:text-primary hover:-translate-y-0.5 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:border-primary dark:hover:text-primary"
             >
               {t.homepage.ctaSecondary}
             </Link>
           </div>
 
           {/* Stats strip */}
-          <div className="animate-slide-up-delay-3 mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {STATS.map(({ value, label }) => (
-              <div key={label} className="rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-900/50">
+              <div key={label} className="rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 shadow-sm dark:border-slate-700/60 dark:bg-slate-900/50">
                 <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{value}</p>
                 <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{label}</p>
               </div>
@@ -205,13 +209,13 @@ export function HomePageClient() {
                 <Link
                   key={tool.slug}
                   href={`/calculators/${tool.slug}`}
-                  className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-card-hover dark:border-slate-800 dark:bg-slate-900 dark:hover:border-primary/40"
+                className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-card transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-card-hover dark:border-slate-800 dark:bg-slate-900 dark:hover:border-primary/40"
                 >
                   <div className="flex items-start justify-between">
                     <span className={`rounded-lg px-2.5 py-1 text-xs font-semibold capitalize ${colorClass}`}>
                       {tool.category.replace('-', ' ')}
                     </span>
-                    <ArrowRight className="h-4 w-4 text-slate-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-primary dark:text-slate-600 dark:group-hover:text-primary-400" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4 text-slate-300 transition-[transform,color] duration-200 group-hover:translate-x-0.5 group-hover:text-primary dark:text-slate-600 dark:group-hover:text-primary-400" aria-hidden="true" />
                   </div>
                   <h3 className="mt-4 text-base font-semibold text-slate-900 transition-colors group-hover:text-primary dark:text-white dark:group-hover:text-primary-400">
                     {tool.name}
@@ -290,7 +294,7 @@ export function HomePageClient() {
             {TRUST_ITEMS.map(({ icon, title, desc }) => (
               <div
                 key={title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover dark:border-slate-800 dark:bg-slate-900"
+                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-card-hover dark:border-slate-800 dark:bg-slate-900"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 dark:bg-primary-950/50">
                   {icon}

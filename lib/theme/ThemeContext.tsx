@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useState,
   type ReactNode,
 } from 'react';
@@ -55,8 +56,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // On mount: load saved theme from localStorage
-  useEffect(() => {
+  // Do this after hydration but before the browser paints. The previous inline
+  // layout script changed <html> before React hydrated, which can produce a
+  // root-level hydration mismatch when its class differs from the server HTML.
+  useLayoutEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
       if (saved && (saved === 'light' || saved === 'dark' || saved === 'system')) {

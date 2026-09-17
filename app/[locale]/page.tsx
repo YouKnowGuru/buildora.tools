@@ -53,11 +53,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const t = translations[locale];
 
   return (
     <>
       <JsonLd id="website-schema" data={webSiteSchema(SITE_URL)} />
-      <HomePageClient />
+      <HomePageClient t={t} />
     </>
   );
 }
